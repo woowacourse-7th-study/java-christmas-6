@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import static christmas.constants.Symbol.NEW_LINE;
 import static christmas.constants.exception.error.ErrorMessage.INVALID_ORDER;
 
 import christmas.constants.exception.InputException;
@@ -8,6 +9,7 @@ import christmas.domain.vo.Product;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Orders {
     private final List<OrderProduct> orderProducts;
@@ -45,5 +47,10 @@ public class Orders {
         return orderProducts.stream()
             .allMatch(orderProduct -> orderProduct.getProduct().getMenuType() == MenuType.DRINK);
     }
+
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
 
 }

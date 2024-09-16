@@ -9,10 +9,11 @@ import christmas.domain.vo.Product;
 import java.util.Objects;
 
 public class OrderProduct {
+
     private final Product product;
     private final int count;
 
-    public OrderProduct(Product product, int count){
+    public OrderProduct(Product product, int count) {
         validateProduct(product);
         validateCount(count);
         this.product = product;
@@ -25,7 +26,7 @@ public class OrderProduct {
         }
     }
 
-    private static boolean isInProduct(final Product product){
+    private static boolean isInProduct(final Product product) {
         return product == null;
     }
 
@@ -33,21 +34,25 @@ public class OrderProduct {
         validateCountMinMax(count);
     }
 
-    private static void validateCountMinMax(final int count){ // 최소, 최대 주문
-        if(isValidCountMinMax(count)){
+    private static void validateCountMinMax(final int count) { // 최소, 최대 주문
+        if (isValidCountMinMax(count)) {
             return;
         }
         throw new InputException(INVALID_ORDER);
     }
 
-    private static boolean isValidCountMinMax(final int count){
+    private static boolean isValidCountMinMax(final int count) {
         return COUNT_MIN <= count && count <= COUNT_MAX;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         OrderProduct that = (OrderProduct) o;
         return product == that.product;
     }
@@ -57,11 +62,15 @@ public class OrderProduct {
         return Objects.hash(product);
     }
 
-    public Product getProduct(){
+    public Product getProduct() {
         return product;
     }
 
-    public int getCount(){
+    public String getProductName() {
+        return product.getName();
+    }
+
+    public int getCount() {
         return count;
     }
 }

@@ -56,7 +56,8 @@ public class EventPlannerController {
         };
     }
 
-    private void printEventBenefits(){
-        outputView.printHeaderEventBenefits();
+    private void printEventBenefits(){ // 혜택 출력
+        outputView.printHeaderEventBenefits(); // 안내 문구 출력
+        outputView.printOrderDetails(ordersDto); // 주문 메뉴 출력
     }
 }
