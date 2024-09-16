@@ -1,8 +1,10 @@
 package christmas.controller;
 
 import christmas.constants.exception.InputException;
+import christmas.dto.OrderDto;
 import christmas.dto.VisitDateDto;
 import christmas.util.DateParserUtil;
+import christmas.util.OrderParserUtil;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -11,6 +13,7 @@ public class EventPlannerController {
     private final OutputView outputView;
 
     private VisitDateDto visitDateDto;
+    private OrderDto orderDto;
 
     public EventPlannerController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -47,7 +50,8 @@ public class EventPlannerController {
 
     private Runnable inputOrder(){ // 주문 메뉴와 개수를 입력 받는다.
         return () ->{
-            String order = inputView.inputOrder();
+            String inputOrder = inputView.inputOrder();
+            orderDto = OrderParserUtil.parseOrder(inputOrder);
         };
     }
 }
