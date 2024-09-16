@@ -24,6 +24,7 @@ public class EventPlannerController {
         printEventPlannerGuide();
         runUntilNoException(inputVisitDate());
         runUntilNoException(inputOrder());
+        printEventBenefits();
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -53,5 +54,9 @@ public class EventPlannerController {
             String inputOrder = inputView.inputOrder();
             orderDto = OrderParserUtil.parseOrder(inputOrder);
         };
+    }
+
+    private void printEventBenefits(){
+        outputView.printHeaderEventBenefits();
     }
 }
