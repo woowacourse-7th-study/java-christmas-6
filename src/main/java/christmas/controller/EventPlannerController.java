@@ -2,7 +2,7 @@ package christmas.controller;
 
 import christmas.constants.exception.InputException;
 import christmas.dto.VisitDateDto;
-import christmas.util.ParserUtil;
+import christmas.util.DateParserUtil;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -41,7 +41,7 @@ public class EventPlannerController {
     private Runnable inputVisitDate() { // 방문 날짜를 입력 받는다.
         return () -> {
             String date = inputView.inputVisitDate();
-            visitDateDto = ParserUtil.parseVisitDate(date);
+            visitDateDto = DateParserUtil.parseVisitDate(date);
         };
     }
 

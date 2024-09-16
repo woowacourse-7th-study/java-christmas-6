@@ -72,9 +72,8 @@
     - 이벤트 배지 출력
 ---
 - ## util
-  - ### `ParserUtil`
-    - 방문 날짜
-    - 주문 메뉴와 개수
+    - ### `DateParserUtil`
+    - ### `OrderParserUtil`
 ---
 - ## validator
   - ### `userInputValidator`
