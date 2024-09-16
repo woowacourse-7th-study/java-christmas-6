@@ -5,7 +5,7 @@ import christmas.dto.VisitDateDto;
 import christmas.validator.UserInputValidator;
 
 public class ParserUtil {
-    public static VisitDateDto parseVisitDate(String input){
+    public static VisitDateDto parseVisitDate(String input) {
         VisitDate visitDate = new VisitDate(stringToInteger(input));
         return new VisitDateDto(visitDate);
     }

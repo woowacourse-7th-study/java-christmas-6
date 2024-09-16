@@ -1,13 +1,16 @@
 package christmas.view;
+
+import static christmas.constants.ViewMessage.REQUEST_VISIT_DATE;
+
 import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
-    public String inputVisitDate(){
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+    public String inputVisitDate() {
+        System.out.println(REQUEST_VISIT_DATE);
         return requestInput();
     }
 
-    private String requestInput(){
+    private String requestInput() {
         return Console.readLine();
     }
 }
