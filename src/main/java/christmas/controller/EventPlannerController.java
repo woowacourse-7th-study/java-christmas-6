@@ -1,8 +1,10 @@
 package christmas.controller;
 
 import christmas.constants.exception.InputException;
+import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
-import christmas.util.ParserUtil;
+import christmas.util.DateParserUtil;
+import christmas.util.OrderParserUtil;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -11,6 +13,7 @@ public class EventPlannerController {
     private final OutputView outputView;
 
     private VisitDateDto visitDateDto;
+    private OrdersDto ordersDto;
 
     public EventPlannerController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -20,6 +23,8 @@ public class EventPlannerController {
     public void run() {
         printEventPlannerGuide();
         runUntilNoException(inputVisitDate());
+        runUntilNoException(inputOrder());
+        printEventBenefits();
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -39,8 +44,20 @@ public class EventPlannerController {
 
     private Runnable inputVisitDate() { // 방문 날짜를 입력 받는다.
         return () -> {
-            String input = inputView.inputVisitDate();
-            visitDateDto = ParserUtil.parseVisitDate(input);
+            String date = inputView.inputVisitDate();
+            visitDateDto = DateParserUtil.parseVisitDate(date);
         };
+    }
+
+    private Runnable inputOrder(){ // 주문 메뉴와 개수를 입력 받는다.
+        return () ->{
+            String inputOrder = inputView.inputOrder();
+            ordersDto = OrderParserUtil.parseOrder(inputOrder);
+        };
+    }
+
+    private void printEventBenefits(){ // 혜택 출력
+        outputView.printHeaderEventBenefits(); // 안내 문구 출력
+        outputView.printOrderDetails(ordersDto); // 주문 메뉴 출력
     }
 }

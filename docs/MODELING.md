@@ -8,10 +8,11 @@
 - ## domain
   - ### 방문 날짜 = `visitDate`
   - ### 주문 - `Orders`
-    - 주문 메뉴
+    - 주문 메뉴 리스트 관리
+    
+  - ### 주문 메뉴 - `OrderProduct`
     - 주문 개수
     - 주문 가격
-  - ### 주문 메뉴 - `OrderProduct`
   - ### Discount
     - #### 할인 혜택 - `DiscountBenefits` - interface 구현
       - 클스마스 디데이 할인 - `XmasDiscount`
@@ -24,7 +25,7 @@
         - 메인
         - 디저트
         - 음료
-    - #### 메뉴 종류 - `MenuItem` - enum
+    - #### 메뉴 종류 - `Product` - enum
     - #### 이벤트 배지 - `EventBadgeType` - enum
     - #### 이벤트 캘린더 - `EventCalendar` - record
 ---
@@ -72,9 +73,8 @@
     - 이벤트 배지 출력
 ---
 - ## util
-  - ### `ParserUtil`
-    - 방문 날짜
-    - 주문 메뉴와 개수
+    - ### `DateParserUtil`
+    - ### `OrderParserUtil`
 ---
 - ## validator
   - ### `userInputValidator`
