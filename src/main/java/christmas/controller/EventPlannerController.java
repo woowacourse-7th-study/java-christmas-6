@@ -20,6 +20,7 @@ public class EventPlannerController {
     public void run() {
         printEventPlannerGuide();
         runUntilNoException(inputVisitDate());
+        runUntilNoException(inputOrder());
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -39,8 +40,14 @@ public class EventPlannerController {
 
     private Runnable inputVisitDate() { // 방문 날짜를 입력 받는다.
         return () -> {
-            String input = inputView.inputVisitDate();
-            visitDateDto = ParserUtil.parseVisitDate(input);
+            String date = inputView.inputVisitDate();
+            visitDateDto = ParserUtil.parseVisitDate(date);
+        };
+    }
+
+    private Runnable inputOrder(){ // 주문 메뉴와 개수를 입력 받는다.
+        return () ->{
+            String order = inputView.inputOrder();
         };
     }
 }
