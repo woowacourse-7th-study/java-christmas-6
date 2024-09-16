@@ -6,8 +6,8 @@
   - ### `eventPlannerController`
 ---
 - ## domain
+  - ### 방문 날짜 = `visitDate`
   - ### 주문 - `Orders`
-    - 방문 날짜
     - 주문 메뉴
     - 주문 개수
     - 주문 가격
@@ -70,7 +70,11 @@
     - 총 혜택 금액 출력
     - 할인 후 예상 금액 출력
     - 이벤트 배지 출력
-
+---
+- ## util
+  - ### `ParserUtil`
+    - 방문 날짜
+    - 주문 메뉴와 개수
 ---
 - ## validator
   - ### `userInputValidator`
