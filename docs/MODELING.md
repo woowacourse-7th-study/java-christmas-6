@@ -1,0 +1,89 @@
+# 크리스마스 프로모션
+## 모델링
+
+---
+- ## controller
+  - ### `eventPlannerController`
+---
+- ## domain
+  - ### 주문 - `Orders`
+    - 방문 날짜
+    - 주문 메뉴
+    - 주문 개수
+    - 주문 가격
+  - ### 주문 메뉴 - `OrderProduct`
+  - ### Discount
+    - #### 할인 혜택 - `DiscountBenefits` - interface 구현
+      - 클스마스 디데이 할인 - `XmasDiscount`
+      - 평일 할인 - `WeekdatDiscount`
+      - 주말 할인 - `WeekendDiscount`
+      - 특별 할인 - `SpecialDiscount`
+  - ### VO
+    - #### 주문 메뉴 - `MenuType` - enum
+        - 에피타이저
+        - 메인
+        - 디저트
+        - 음료
+    - #### 메뉴 종류 - `MenuItem` - enum
+    - #### 이벤트 배지 - `EventBadgeType` - enum
+    - #### 이벤트 캘린더 - `EventCalendar` - record
+---
+- ## service
+  - ### calculate
+    - 할인 전 총 주문 금액 계산 - `CalculatePreTotalPrice`
+    - 총 혜택 금액 계산 - `CalculateTotalDiscount`
+    - 할인 후 예상 금액 계산 `CalculatePostTotalPrice`
+  - ### convert
+    - 총 혜택 금액 -> 이벤트 배지 - `PriceToBadge`
+    - 할인 전 총 주문 금액 -> 증정 메뉴 유무 - `PriceToGift`
+    - 총 주문 금액(10,000 이상) -> 혜택의 유무 - `PriceToBenefits`
+
+---
+- ## dto
+  - ### `OrderDto`
+    - 메뉴 종류
+    - 메뉴 개수
+    - 메뉴 가격
+  - ### `DiscountDto`
+    - 크리스마스
+    - 평일
+    - 주말
+    - 특별
+    - 총 할인 금액
+  - ### `EventDto`
+    - 증정 메뉴
+    - 혜택 금액
+    - 이벤트 배지
+    - 할인 전/후 금액
+---
+- ## view
+  - ### `InputView`
+    - 식당 예상 방문 날짜 입력
+    - 주문 메뉴와 개수 입력
+  - ### `OutputView`
+    - 이벤트 플래너 안내 문구 출력
+    - 이벤트 혜택 안내 문구 출력
+    - 주문한 메뉴 출력
+    - 할인 전 총 주문 금액 출력
+    - 증정 메뉴 제공 출력
+    - 혜택 내역 출력
+    - 총 혜택 금액 출력
+    - 할인 후 예상 금액 출력
+    - 이벤트 배지 출력
+
+---
+- ## validator
+  - ### `userInputValidator`
+  - ### `isValidMenu`
+    - 음료만 있는 경우 x
+---
+- ## constants
+  - ### `ErrorMessage`
+  - ### `ViewMessage`
+  - ### `Number`
+    - 날짜 최소
+    - 날짜 최대
+    - 메뉴 개수 최소
+    - 메뉴 개수 최대
+    - 크리스마스 디데이 할인값 시작
+    - 증정 메뉴 만족하는 금액
