@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProductTest {
     @Test
     @DisplayName("유효한 이름으로 제품을 찾으면 해당 제품이 반환된다.")
-    void findProductByNameReturnsProduct() {
+    void returnsValidProduct() {
         // given
         String validProductName = "양송이수프";
 
@@ -21,7 +21,7 @@ public class ProductTest {
 
     @Test
     @DisplayName("유효하지 않은 이름으로 제품을 찾으면 null이 반환된다.")
-    void findProductByNameReturnsNullForInvalidName() {
+    void returnsNullForInvalidName() {
         // given
         String invalidProductName = "존재하지않는제품";
 
@@ -34,7 +34,7 @@ public class ProductTest {
 
     @Test
     @DisplayName("유효한 제품 이름으로 메뉴 타입을 찾으면 해당 메뉴 타입이 반환된다.")
-    void findMenuTypeByProductNameReturnsMenuType() {
+    void returnsValidProductToMenuType() {
         // given
         String validProductName = "양송이수프";
 
@@ -47,7 +47,7 @@ public class ProductTest {
 
     @Test
     @DisplayName("유효하지 않은 제품 이름으로 메뉴 타입을 찾으면 null이 반환된다.")
-    void findMenuTypeByProductNameReturnsNullForInvalidName() {
+    void returnNullForInvalidName() {
         // given
         String invalidProductName = "존재하지않는제품";
 
