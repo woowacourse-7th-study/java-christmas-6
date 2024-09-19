@@ -1,7 +1,5 @@
 package christmas.domain;
 
-import christmas.domain.OrderProduct;
-import christmas.domain.Orders;
 import christmas.constants.exception.InputException;
 import christmas.domain.vo.Product;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +32,7 @@ public class OrdersTest {
         // given
         List<OrderProduct> duplicateOrderProducts = List.of(
             new OrderProduct(Product.MUSHROOM_SOUP, 2),
-            new OrderProduct(Product.MUSHROOM_SOUP, 1) 
+            new OrderProduct(Product.MUSHROOM_SOUP, 1)
         );
 
         // when, then
