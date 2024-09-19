@@ -1,6 +1,5 @@
 package christmas.domain;
 
-import static christmas.constants.Symbol.NEW_LINE;
 import static christmas.constants.exception.error.ErrorMessage.INVALID_ORDER;
 
 import christmas.constants.exception.InputException;
@@ -9,12 +8,12 @@ import christmas.domain.vo.Product;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Orders {
+
     private final List<OrderProduct> orderProducts;
 
-    public Orders(List<OrderProduct> orderProducts){
+    public Orders(List<OrderProduct> orderProducts) {
         validateOrders(orderProducts);
         this.orderProducts = orderProducts;
     }
@@ -33,6 +32,7 @@ public class Orders {
             throw new InputException(INVALID_ORDER);
         }
     }
+
     private boolean isDuplicateProduct(Set<Product> productSet, OrderProduct orderProduct) {
         return productSet.add(orderProduct.getProduct());
     }
@@ -43,7 +43,7 @@ public class Orders {
         }
     }
 
-    private boolean isOnlyDrinks(List<OrderProduct> orderProducts){
+    private boolean isOnlyDrinks(List<OrderProduct> orderProducts) {
         return orderProducts.stream()
             .allMatch(orderProduct -> orderProduct.getProduct().getMenuType() == MenuType.DRINK);
     }
@@ -51,6 +51,4 @@ public class Orders {
     public List<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
-
-
 }
