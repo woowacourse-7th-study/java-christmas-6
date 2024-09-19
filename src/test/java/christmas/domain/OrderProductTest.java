@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class OrderProductTest {
     @Test
     @DisplayName("유효한 제품과 수량이 입력되면 예외가 발생하지 않는다.")
-    void validProductAndCountDoesNotThrowException() {
+    void validProductAndCount() {
         // given
         Product validProduct = Product.MUSHROOM_SOUP;
         int validCount = 2;
@@ -24,7 +24,7 @@ public class OrderProductTest {
 
     @Test
     @DisplayName("유효하지 않은 제품이 입력되면 예외가 발생한다.")
-    void invalidProductThrowsException() {
+    void validateInvalidProduct() {
         // given
         Product invalidProduct = null;
 
@@ -36,7 +36,7 @@ public class OrderProductTest {
 
     @Test
     @DisplayName("유효하지 않은 수량이 입력되면 예외가 발생한다.")
-    void invalidCountThrowsException() {
+    void validateInvalidCount() {
         // given
         Product validProduct = Product.MUSHROOM_SOUP;
         int invalidCount = 100;
@@ -49,7 +49,7 @@ public class OrderProductTest {
 
     @Test
     @DisplayName("최소 수량 미만의 수량이 입력되면 예외가 발생한다.")
-    void belowMinCountThrowsException() {
+    void validateBelowMinCount() {
         // given
         Product validProduct = Product.MUSHROOM_SOUP;
         int invalidCount = 0;

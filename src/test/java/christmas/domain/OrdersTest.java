@@ -14,7 +14,7 @@ import java.util.List;
 public class OrdersTest {
     @Test
     @DisplayName("유효한 주문 목록이 입력되면 예외가 발생하지 않는다.")
-    void validOrdersDoesNotThrowException() {
+    void validOrders() {
         // given
         List<OrderProduct> validOrderProducts = List.of(
             new OrderProduct(Product.MUSHROOM_SOUP, 2),
@@ -28,7 +28,7 @@ public class OrdersTest {
 
     @Test
     @DisplayName("중복된 상품이 입력되면 예외가 발생한다.")
-    void duplicateProductsThrowException() {
+    void validDuplicateProducts() {
         // given
         List<OrderProduct> duplicateOrderProducts = List.of(
             new OrderProduct(Product.MUSHROOM_SOUP, 2),
@@ -43,7 +43,7 @@ public class OrdersTest {
 
     @Test
     @DisplayName("음료만 주문된 경우 예외가 발생한다.")
-    void onlyDrinksThrowException() {
+    void validOnlyDrinks() {
         // given
         List<OrderProduct> onlyDrinksOrderProducts = List.of(
             new OrderProduct(Product.ZERO_COKE, 2),
