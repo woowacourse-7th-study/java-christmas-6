@@ -3,7 +3,6 @@ package christmas.validator;
 import christmas.constants.error.type.UserInputException;
 
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_JUST_BLANK;
-import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_OTHER_THAN_NUMERIC;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_STRIP;
 
 public class UserInputValidator {
@@ -13,7 +12,6 @@ public class UserInputValidator {
     public static void validate(String input) {
         validateBlank(input);
         validateStrip(input);
-        validateInteger(input);
     }
 
     private static void validateBlank(String input) {
@@ -28,13 +26,5 @@ public class UserInputValidator {
             return;
         }
         throw new UserInputException(NOT_ALLOWED_STRIP);
-    }
-
-    private static void validateInteger(String input) {
-        try {
-            Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new UserInputException(NOT_ALLOWED_OTHER_THAN_NUMERIC);
-        }
     }
 }
