@@ -11,7 +11,7 @@ public class InputView {
         return requestInput();
     }
 
-    public String inputOrder(){
+    public String inputOrder() {
         System.out.println(REQUEST_ORDER);
         return requestInput();
     }

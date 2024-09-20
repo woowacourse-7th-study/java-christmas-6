@@ -18,14 +18,14 @@ public class VisitDate {
         validateRange(date);
     }
 
-    private void validateRange(final int date){
-        if(isInRange(date)){
+    private void validateRange(final int date) {
+        if (isInRange(date)) {
             return;
         }
         throw new InputException(INVALID_DATE);
     }
 
-    private boolean isInRange(final int date){
+    private boolean isInRange(final int date) {
         return DATE_MIN <= date && date <= DATE_MAX;
     }
 

@@ -21,7 +21,8 @@ public class EventPlannerController {
     private BenefitDto benefitDto;
     private OrdersDto ordersDto;
 
-    public EventPlannerController(InputView inputView, OutputView outputView, CalculateService calculateService, ConvertService convertService) {
+    public EventPlannerController(InputView inputView, OutputView outputView,
+        CalculateService calculateService, ConvertService convertService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.calculateService = calculateService;
@@ -59,24 +60,24 @@ public class EventPlannerController {
         };
     }
 
-    private Runnable inputOrder(){ // 주문 메뉴와 개수를 입력 받는다.
-        return () ->{
+    private Runnable inputOrder() { // 주문 메뉴와 개수를 입력 받는다.
+        return () -> {
             String inputOrder = inputView.inputOrder();
             ordersDto = OrderParserUtil.parseOrder(inputOrder);
         };
     }
 
-    private void outputEventBenefits(){ // 혜택 출력
+    private void outputEventBenefits() { // 혜택 출력
         outputView.printHeaderEventBenefits(); // 안내 문구 출력
         outputView.printOrderDetails(ordersDto); // 주문 메뉴 출력
     }
 
-    private void outputPreTotalPrice(){ // 할인 전 총주문 금액 출력
+    private void outputPreTotalPrice() { // 할인 전 총주문 금액 출력
         benefitDto = calculateService.calculateBenefits(ordersDto);
         outputView.printPreTotalPrice(benefitDto.preTotalPrice());
     }
 
-    private void outputGiftAvailable(){
+    private void outputGiftAvailable() {
         String giftMessage = benefitDto.getGiftMessage();
         outputView.printIsGiftAvailable(giftMessage);
     }
