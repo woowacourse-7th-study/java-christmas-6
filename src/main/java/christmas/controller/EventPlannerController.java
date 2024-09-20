@@ -1,9 +1,11 @@
 package christmas.controller;
 
 import christmas.constants.exception.InputException;
+import christmas.dto.BenefitDto;
 import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
 import christmas.service.CalculateService;
+import christmas.service.ConvertService;
 import christmas.util.DateParserUtil;
 import christmas.util.OrderParserUtil;
 import christmas.view.InputView;
@@ -13,14 +15,17 @@ public class EventPlannerController {
     private final InputView inputView;
     private final OutputView outputView;
     private final CalculateService calculateService;
+    private final ConvertService convertService;
 
     private VisitDateDto visitDateDto;
+    private BenefitDto benefitDto;
     private OrdersDto ordersDto;
 
-    public EventPlannerController(InputView inputView, OutputView outputView, CalculateService calculateService) {
+    public EventPlannerController(InputView inputView, OutputView outputView, CalculateService calculateService, ConvertService convertService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.calculateService = calculateService;
+        this.convertService = convertService;
     }
 
     public void run() {
@@ -29,6 +34,7 @@ public class EventPlannerController {
         runUntilNoException(inputOrder());
         outputEventBenefits();
         outputPreTotalPrice();
+        outputGiftAvailable();
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -66,7 +72,12 @@ public class EventPlannerController {
     }
 
     private void outputPreTotalPrice(){ // 할인 전 총주문 금액 출력
-        int preTotalPrice = calculateService.calculatePreTotalPrice(ordersDto);
-        outputView.printPreTotalPrice(preTotalPrice);
+        benefitDto = calculateService.calculateBenefits(ordersDto);
+        outputView.printPreTotalPrice(benefitDto.preTotalPrice());
+    }
+
+    private void outputGiftAvailable(){
+        String giftMessage = convertService.priceToGift(benefitDto);
+        outputView.printIsGiftAvailable(giftMessage);
     }
 }
