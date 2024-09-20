@@ -1,9 +1,13 @@
 package christmas.domain;
 
 import christmas.constants.exception.InputException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import static christmas.constants.Number.DATE_MAX;
 import static christmas.constants.Number.DATE_MIN;
+import static christmas.constants.Number.EVENT_MONTH;
+import static christmas.constants.Number.EVENT_YEAR;
 import static christmas.constants.exception.error.ErrorMessage.INVALID_DATE;
 
 public class VisitDate {
