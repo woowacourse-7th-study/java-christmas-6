@@ -2,6 +2,8 @@ package christmas.domain;
 
 import christmas.constants.exception.InputException;
 import christmas.domain.vo.Product;
+import christmas.dto.VisitDateDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +14,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 
 public class OrdersTest {
+    private VisitDateDto visitDateDto;
+
+    @BeforeEach
+    void setUp() {
+        visitDateDto = new VisitDateDto(1);
+    }
+
     @Test
     @DisplayName("유효한 주문 목록이 입력되면 예외가 발생하지 않는다.")
     void validOrders() {
@@ -22,7 +31,7 @@ public class OrdersTest {
         );
 
         // when, then
-        assertThatCode(() -> new Orders(validOrderProducts))
+        assertThatCode(() -> new Orders(validOrderProducts,visitDateDto))
             .doesNotThrowAnyException();
     }
 
@@ -36,7 +45,7 @@ public class OrdersTest {
         );
 
         // when, then
-        assertThatThrownBy(() -> new Orders(duplicateOrderProducts))
+        assertThatThrownBy(() -> new Orders(duplicateOrderProducts,visitDateDto))
             .isInstanceOf(InputException.class)
             .hasMessageContaining(INVALID_ORDER.getMessage());
     }
@@ -51,7 +60,7 @@ public class OrdersTest {
         );
 
         // when, then
-        assertThatThrownBy(() -> new Orders(onlyDrinksOrderProducts))
+        assertThatThrownBy(() -> new Orders(onlyDrinksOrderProducts,visitDateDto))
             .isInstanceOf(InputException.class)
             .hasMessageContaining(INVALID_ORDER.getMessage());
     }

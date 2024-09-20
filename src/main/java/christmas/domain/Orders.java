@@ -21,6 +21,13 @@ public class Orders {
         this.visitDateDto = visitDateDto;
     }
 
+    public int findCountMenuType(MenuType targetMenuType) {
+        return orderProducts.stream()
+            .filter(orderProduct -> orderProduct.isSameMenuType(targetMenuType))
+            .mapToInt(OrderProduct::getCount)
+            .sum();
+    }
+
     private void validateOrders(List<OrderProduct> orderProducts) {
         validateDuplicateProducts(orderProducts);
         validateNotOnlyDrinks(orderProducts);
