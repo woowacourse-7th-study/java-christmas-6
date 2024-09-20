@@ -8,13 +8,13 @@ public class Gift {
     private static final String DEFAULT_GIFT_QUANTITY = "1개";
     private final boolean isGiftAvailable;
 
-    public Gift(boolean isGiftAvailable){
+    public Gift(boolean isGiftAvailable) {
         this.isGiftAvailable = isGiftAvailable;
     }
 
-    public String getGiftMessage(){
-        if(isGiftAvailable){
-            return Product.CHAMPAGNE.getName()+" "+DEFAULT_GIFT_QUANTITY;
+    public String getGiftMessage() {
+        if (isGiftAvailable) {
+            return Product.CHAMPAGNE.getName() + " " + DEFAULT_GIFT_QUANTITY;
         }
         return Product.NONE.getName(); // "없음" 반환
     }

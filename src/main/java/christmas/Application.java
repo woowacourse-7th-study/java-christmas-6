@@ -13,6 +13,6 @@ public class Application {
         CalculateService calculateService = new CalculateService();
         ConvertService convertService = new ConvertService();
 
-        new EventPlannerController(inputView,outputView,calculateService,convertService).run();
+        new EventPlannerController(inputView, outputView, calculateService, convertService).run();
     }
 }
