@@ -13,24 +13,28 @@ import java.util.List;
 
 public class OrderParserUtil {
     public static OrdersDto parseOrder(String input) {
-        UserInputValidator.validateOrders(input);
+        List<OrderProduct> orderProducts = parseOrderProducts(input);
+        Orders orders = new Orders(orderProducts);
+        return new OrdersDto(orders);
+    }
+
+    private static List<OrderProduct> parseOrderProducts(String input) {
+        UserInputValidator.validateOrders(input); // 빈 입력인지 검증
 
         List<OrderProduct> orderProducts = new ArrayList<>();
         List<String> ordersInput = List.of(input.split(COMMA));
 
         for (String orderInput : ordersInput) {
-            UserInputValidator.validateOrder(orderInput);
+            UserInputValidator.validateOrder(orderInput); // hyphen이 제대로 들어가 있는지 검증
             String[] parts = orderInput.split(HYPHEN);
 
             String productName = parts[0];
             Product product = Product.findProductByName(productName);
-            int count = UserInputValidator.validateInteger(parts[1]);
+            int count = UserInputValidator.validateInteger(parts[1]); // 정수 검증
 
             orderProducts.add(new OrderProduct(product, count));
         }
 
-        Orders orders = new Orders(orderProducts);
-
-        return new OrdersDto(orders);
+        return orderProducts;
     }
 }
