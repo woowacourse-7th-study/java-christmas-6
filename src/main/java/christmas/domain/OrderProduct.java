@@ -45,6 +45,10 @@ public class OrderProduct {
         return COUNT_MIN <= count && count <= COUNT_MAX;
     }
 
+    public int calculatePrice() {
+        return product.getPrice() * count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
