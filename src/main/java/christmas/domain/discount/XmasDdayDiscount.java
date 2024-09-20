@@ -4,7 +4,6 @@ import christmas.domain.Orders;
 import christmas.dto.VisitDateDto;
 
 public class XmasDdayDiscount implements Discount {
-
     private static final int END_DAY = 25;
     private static final int DEFAULT_DISCOUNT_PRICE = 1000;
     private static final int DISCOUNT_PER_DAY_PRICE = 100;
