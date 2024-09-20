@@ -13,7 +13,7 @@ public class CalculateService {
         return new BenefitDto(preTotalPrice, new Gift(isGiftAvailable));
     }
 
-    public int calculatePreTotalPrice(OrdersDto ordersDto) {
+    private int calculatePreTotalPrice(OrdersDto ordersDto) {
         return ordersDto.orders().calculatePreTotalPrice();
     }
 }
