@@ -17,15 +17,16 @@ public class UserInputValidator {
         }
     }
 
-    public static void validateOrders(String orders){ // orders가 비어있는지 확인
-        if (isEmptyOrders(orders)){
+    public static void validateOrders(String orders) { // orders가 비어있는지 확인
+        if (isEmptyOrders(orders)) {
             throw new InputException(INVALID_ORDER);
         }
     }
 
-    private static boolean isEmptyOrders(String orders){
+    private static boolean isEmptyOrders(String orders) {
         return orders == null || orders.trim().isEmpty();
     }
+
     public static void validateOrder(String order) { // hyphen이 정상적으로 들어가 있는지 확인
         String[] parts = order.split(HYPHEN); // parts[0] : product , parts[1] : count
         validateInputOrderFormat(parts);
@@ -38,11 +39,11 @@ public class UserInputValidator {
         throw new InputException(INVALID_ORDER);
     }
 
-    private static boolean isValidLength(String[] parts){
+    private static boolean isValidLength(String[] parts) {
         return parts.length == ORDER_VALID_LENGTH;
     }
 
-    public static int validateInteger(String input){
+    public static int validateInteger(String input) {
         try {
             int count = Integer.parseInt(input);
             return count;
