@@ -43,6 +43,12 @@ public class Orders {
         }
     }
 
+    public int calculatePreTotalPrice() {
+        return orderProducts.stream()
+            .mapToInt(OrderProduct::calculatePrice)
+            .sum();
+    }
+
     private boolean isOnlyDrinks(List<OrderProduct> orderProducts) {
         return orderProducts.stream()
             .allMatch(orderProduct -> orderProduct.getProduct().getMenuType() == MenuType.DRINK);

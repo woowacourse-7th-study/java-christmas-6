@@ -3,6 +3,7 @@ package christmas.controller;
 import christmas.constants.exception.InputException;
 import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
+import christmas.service.CalculateService;
 import christmas.util.DateParserUtil;
 import christmas.util.OrderParserUtil;
 import christmas.view.InputView;
@@ -11,20 +12,23 @@ import christmas.view.OutputView;
 public class EventPlannerController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final CalculateService calculateService;
 
     private VisitDateDto visitDateDto;
     private OrdersDto ordersDto;
 
-    public EventPlannerController(InputView inputView, OutputView outputView) {
+    public EventPlannerController(InputView inputView, OutputView outputView, CalculateService calculateService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.calculateService = calculateService;
     }
 
     public void run() {
-        printEventPlannerGuide();
+        outputEventPlannerGuide();
         runUntilNoException(inputVisitDate());
         runUntilNoException(inputOrder());
-        printEventBenefits();
+        outputEventBenefits();
+        outputPreTotalPrice();
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -38,7 +42,7 @@ public class EventPlannerController {
         }
     }
 
-    private void printEventPlannerGuide() { // 안내 문구 출력
+    private void outputEventPlannerGuide() { // 안내 문구 출력
         outputView.printHeaderNotice();
     }
 
@@ -56,8 +60,13 @@ public class EventPlannerController {
         };
     }
 
-    private void printEventBenefits(){ // 혜택 출력
+    private void outputEventBenefits(){ // 혜택 출력
         outputView.printHeaderEventBenefits(); // 안내 문구 출력
         outputView.printOrderDetails(ordersDto); // 주문 메뉴 출력
+    }
+
+    private void outputPreTotalPrice(){ // 할인 전 총주문 금액 출력
+        int preTotalPrice = calculateService.calculatePreTotalPrice(ordersDto);
+        outputView.printPreTotalPrice(preTotalPrice);
     }
 }
