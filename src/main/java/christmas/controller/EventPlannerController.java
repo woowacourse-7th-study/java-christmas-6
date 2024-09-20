@@ -77,7 +77,7 @@ public class EventPlannerController {
     }
 
     private void outputGiftAvailable(){
-        String giftMessage = convertService.priceToGift(benefitDto);
+        String giftMessage = benefitDto.getGiftMessage();
         outputView.printIsGiftAvailable(giftMessage);
     }
 }
