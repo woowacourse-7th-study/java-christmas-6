@@ -1,17 +1,24 @@
 package christmas.domain.discount;
 
+import christmas.domain.Orders;
 import christmas.dto.VisitDateDto;
 
-public class XmasDdayDiscount implements Discount{
+public class XmasDdayDiscount implements Discount {
+
     private static final int END_DAY = 25;
     private static final int DEFAULT_DISCOUNT_PRICE = 1000;
     private static final int DISCOUNT_PER_DAY_PRICE = 100;
     private static final String XMAS_DISCOUNT_STRING = "크리스마스 디데이 할인";
 
     @Override
-    public int applyDiscount(VisitDateDto visitDateDto){
-        int orderDay = visitDateDto.date();
+    public int applyDiscount(Orders orders) {
+        int orderDay = orders.getDate();
         return getDiscountPrice(orderDay);
+    }
+
+    @Override
+    public String getDiscountName() {
+        return XMAS_DISCOUNT_STRING;
     }
 
     private int getDiscountPrice(int orderDay) {
@@ -22,8 +29,4 @@ public class XmasDdayDiscount implements Discount{
         return DEFAULT_DISCOUNT_PRICE + extraDiscount;
     }
 
-    @Override
-    public String getDiscountName() {
-        return XMAS_DISCOUNT_STRING;
-    }
 }

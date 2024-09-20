@@ -7,14 +7,15 @@ import christmas.domain.OrderProduct;
 import christmas.domain.Orders;
 import christmas.domain.vo.Product;
 import christmas.dto.OrdersDto;
+import christmas.dto.VisitDateDto;
 import christmas.validator.UserInputValidator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderParserUtil {
-    public static OrdersDto parseOrder(String input) {
+    public static OrdersDto parseOrder(String input, VisitDateDto visitDateDto) {
         List<OrderProduct> orderProducts = parseOrderProducts(input);
-        Orders orders = new Orders(orderProducts);
+        Orders orders = new Orders(orderProducts, visitDateDto);
         return new OrdersDto(orders);
     }
 

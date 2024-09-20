@@ -63,7 +63,7 @@ public class EventPlannerController {
     private Runnable inputOrder() { // 주문 메뉴와 개수를 입력 받는다.
         return () -> {
             String inputOrder = inputView.inputOrder();
-            ordersDto = OrderParserUtil.parseOrder(inputOrder);
+            ordersDto = OrderParserUtil.parseOrder(inputOrder, visitDateDto);
         };
     }
 

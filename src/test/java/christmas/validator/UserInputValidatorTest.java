@@ -6,12 +6,21 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import christmas.constants.exception.InputException;
+import christmas.dto.VisitDateDto;
 import christmas.util.OrderParserUtil;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class UserInputValidatorTest {
+    private VisitDateDto visitDateDto;
+
+    @BeforeEach
+    void setUp() {
+        visitDateDto = new VisitDateDto(1);
+    }
+
     @Test
     @DisplayName("날짜 입력 시에 정수가 입력되지 않으면 예외를 발생시킨다.")
     void validDateStringToInteger() {
@@ -35,7 +44,7 @@ public class UserInputValidatorTest {
 
         // when, then
         for (String input : param) {
-            assertThatThrownBy(() -> OrderParserUtil.parseOrder(input))
+            assertThatThrownBy(() -> OrderParserUtil.parseOrder(input, visitDateDto))
                 .isInstanceOf(InputException.class)
                 .hasMessageContaining(INVALID_ORDER.getMessage());
         }
@@ -88,7 +97,7 @@ public class UserInputValidatorTest {
         String validInput = "양송이수프-1,초코케이크-3,제로콜라-3";
 
         // when, then
-        assertThatCode(() -> OrderParserUtil.parseOrder(validInput))
+        assertThatCode(() -> OrderParserUtil.parseOrder(validInput, visitDateDto))
             .doesNotThrowAnyException();
     }
 }
