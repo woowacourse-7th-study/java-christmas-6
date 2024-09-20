@@ -2,6 +2,7 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import static christmas.constants.ViewMessage.READ_MENU;
 import static christmas.constants.ViewMessage.READ_VISIT_DAY;
 
 public class InputView {
@@ -10,6 +11,11 @@ public class InputView {
 
     public static String readVisitDay() {
         System.out.println(READ_VISIT_DAY);
+        return Console.readLine();
+    }
+
+    public static String readMenu() {
+        System.out.println(READ_MENU);
         return Console.readLine();
     }
 }

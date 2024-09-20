@@ -2,9 +2,12 @@ package christmas.model;
 
 import christmas.constants.error.type.UserInputException;
 
-import static christmas.constants.error.ErrorMessage.INVALID_VISIT_DATE_RANGE;
+import static christmas.constants.error.ErrorMessage.INVALID_VISIT_DAY_RANGE;
 
 public class VisitDay {
+    private static final int DAY_MIN = 1;
+    private static final int DAY_MAX = 31;
+    
     private int visitDay;
 
     public VisitDay(int visitDay) {
@@ -20,10 +23,10 @@ public class VisitDay {
         if (isInRange(visitDay)) {
             return;
         }
-        throw new UserInputException(INVALID_VISIT_DATE_RANGE);
+        throw new UserInputException(INVALID_VISIT_DAY_RANGE);
     }
 
-    private boolean isInRange(int visitDate) {
-        return 1 <= visitDate && visitDate <= 31;
+    private boolean isInRange(int visitDay) {
+        return DAY_MIN <= visitDay && visitDay <= DAY_MAX;
     }
 }
