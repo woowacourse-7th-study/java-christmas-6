@@ -20,7 +20,6 @@ public class Validator {
     public static void validateMenu(String input) {
         validateBlank(input);
         validateStrip(input);
-        validateComma(input);
         validateDash(input);
     }
 
@@ -36,13 +35,6 @@ public class Validator {
             return;
         }
         throw new UserInputException(NOT_ALLOWED_STRIP);
-    }
-
-    private static void validateComma(String input) {
-        if (input.contains(COMMA)) {
-            return;
-        }
-        throw new UserInputException(NOT_ALLOWED_ORDER);
     }
 
     private static void validateDash(String input) {

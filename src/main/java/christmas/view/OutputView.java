@@ -9,4 +9,8 @@ public class OutputView {
     public static void printGreetingMessage() {
         System.out.println(GREETING_MESSAGE);
     }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }

@@ -3,7 +3,10 @@ package christmas.model;
 import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 
@@ -21,12 +24,16 @@ public class Order {
     }
 
     private void validateInMenu(Map<String, Integer> items) {
-        for (Menu menu : Menu.values()) {
-            if (items.containsKey(menu.getName())) {
-                return;
-            }
-            throw new UserInputException(NOT_ALLOWED_ORDER);
+        Set<String> menu = Arrays.stream(Menu.values())
+                .map(Menu::getName)
+                .collect(Collectors.toSet());
+        Set<String> order = items.keySet();
+
+        boolean allValid = menu.containsAll(order);
+        if (allValid) {
+            return;
         }
+        throw new UserInputException(NOT_ALLOWED_ORDER);
     }
 
     private void validateQuantity(Map<String, Integer> items) {
