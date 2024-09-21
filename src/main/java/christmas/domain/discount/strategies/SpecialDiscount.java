@@ -1,12 +1,13 @@
-package christmas.domain.discount;
+package christmas.domain.discount.strategies;
+
+import static christmas.domain.discount.constants.DiscountInfo.SPECIAL;
+import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT_PRICE;
+import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT_STRING;
 
 import christmas.domain.Orders;
-import java.util.List;
+import christmas.domain.discount.Discount;
 
-public class SpecialDiscount implements Discount{
-    private static final String SPECIAL_DISCOUNT_STRING = "특별 할인";
-    private static final int SPECIAL_DISCOUNT_PRICE = 1000;
-    private static final List<Integer> SPECIAL = List.of(3, 10, 17, 24, 25, 31);
+public class SpecialDiscount implements Discount {
     @Override
     public int applyDiscount(Orders orders) {
         int orderDay = orders.getDate();
