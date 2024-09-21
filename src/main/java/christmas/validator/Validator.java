@@ -2,7 +2,6 @@ package christmas.validator;
 
 import christmas.constants.error.type.UserInputException;
 
-import static christmas.constants.Symbol.COMMA;
 import static christmas.constants.Symbol.DASH;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_JUST_BLANK;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;

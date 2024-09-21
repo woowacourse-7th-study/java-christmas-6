@@ -7,8 +7,8 @@ import static christmas.constants.error.ErrorMessage.INVALID_VISIT_DAY_RANGE;
 public class VisitDay {
     private static final int DAY_MIN = 1;
     private static final int DAY_MAX = 31;
-    
-    private int visitDay;
+
+    private final int visitDay;
 
     public VisitDay(int visitDay) {
         validate(visitDay);
@@ -28,5 +28,9 @@ public class VisitDay {
 
     private boolean isInRange(int visitDay) {
         return DAY_MIN <= visitDay && visitDay <= DAY_MAX;
+    }
+
+    public int getVisitDay() {
+        return visitDay;
     }
 }

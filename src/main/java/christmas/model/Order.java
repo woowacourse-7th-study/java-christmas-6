@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 
 public class Order {
+    private static final int MIN_QUANTITY = 1;
+
     Map<String, Integer> items;
 
     public Order(Map<String, Integer> items) {
@@ -38,17 +40,13 @@ public class Order {
 
     private void validateQuantity(Map<String, Integer> items) {
         items.forEach((name, quantity) -> {
-            if (quantity < 1) {
+            if (quantity < MIN_QUANTITY) {
                 throw new UserInputException(NOT_ALLOWED_ORDER);
             }
         });
     }
 
-    public void addItem(String name, int quantity) {
-        items.put(name, quantity);
-    }
-
-    public int getQuantity(String name) {
-        return items.get(name);
+    public Map<String, Integer> getItems() {
+        return items;
     }
 }

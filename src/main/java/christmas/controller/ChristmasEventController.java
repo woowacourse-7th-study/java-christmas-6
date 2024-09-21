@@ -2,8 +2,12 @@ package christmas.controller;
 
 import christmas.constants.error.type.UserInputException;
 import christmas.converter.Converter;
+import christmas.dto.OrderResponse;
+import christmas.dto.VisitDayResponse;
 import christmas.model.Order;
 import christmas.model.VisitDay;
+import christmas.service.OrderService;
+import christmas.service.VisitDayService;
 import christmas.validator.Validator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -15,6 +19,8 @@ public class ChristmasEventController {
         printGreetingMessage();
         VisitDay visitDay = readVisitDay();
         Order order = readMenu();
+        printDay(visitDay);
+        printOrderInformation(order);
     }
 
     private void printGreetingMessage() {
@@ -22,7 +28,7 @@ public class ChristmasEventController {
     }
 
     private VisitDay readVisitDay() {
-        while(true) {
+        while (true) {
             try {
                 String input = InputView.readVisitDay();
                 Validator.validateVisitDay(input);
@@ -35,7 +41,7 @@ public class ChristmasEventController {
     }
 
     private Order readMenu() {
-        while(true) {
+        while (true) {
             try {
                 String input = InputView.readMenu();
                 Validator.validateMenu(input);
@@ -45,5 +51,18 @@ public class ChristmasEventController {
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
+    }
+
+    private void printDay(VisitDay visitDay) {
+        VisitDayService visitDayService = new VisitDayService();
+        VisitDayResponse visitDayResponse = visitDayService.createVisitDayResponse(visitDay);
+        OutputView.printDay(visitDayResponse);
+    }
+
+    private void printOrderInformation(Order order) {
+        OutputView.printOrderHeader();
+        OrderService orderService = new OrderService();
+        OrderResponse orderResponse = orderService.createOrderResponse(order);
+        OutputView.printOrderInformation(orderResponse);
     }
 }
