@@ -43,6 +43,7 @@ public class EventPlannerController {
         outputDiscountResult();
         outputTotalDiscoutPrice();
         outputTotalPriceAfterDiscount();
+        outputEventBadgeType();
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -105,5 +106,9 @@ public class EventPlannerController {
     private void outputTotalPriceAfterDiscount() { // 할인 후 예상 금액 출력
         String totalPriceMessage = DiscountFormatUtil.formatTotalPriceAfterDiscount(discountDto);
         outputView.printTotalPriceAfterDiscount(totalPriceMessage);
+    }
+
+    private void outputEventBadgeType(){ // 12월 이벤트 배지 출력
+        outputView.printBadgeType();
     }
 }

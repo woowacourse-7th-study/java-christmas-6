@@ -3,6 +3,7 @@ package christmas.view;
 import static christmas.constants.Symbol.FORMAT_NUMBER;
 import static christmas.constants.ViewMessage.ANNOUNCE_EVENT_BENEFITS;
 import static christmas.constants.ViewMessage.EVENT_PLANNER_NOTICE;
+import static christmas.constants.ViewMessage.NOTICE_BADGE_TYPE;
 import static christmas.constants.ViewMessage.NOTICE_DISCOUNT;
 import static christmas.constants.ViewMessage.NOTICE_GIFT;
 import static christmas.constants.ViewMessage.NOTICE_MENU;
@@ -56,6 +57,11 @@ public class OutputView {
         printWhiteSpace();
         System.out.println(NOTICE_PRICE_AFTER_DISCOUNT);
         System.out.println(totalPriceMessage);
+    }
+
+    public void printBadgeType(){
+        printWhiteSpace();
+        System.out.println(NOTICE_BADGE_TYPE);
     }
 
     private static void printWhiteSpace() {
