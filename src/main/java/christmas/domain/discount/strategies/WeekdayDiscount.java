@@ -1,7 +1,9 @@
-package christmas.domain.discount;
+package christmas.domain.discount.strategies;
 
 import static christmas.constants.Number.EVENT_MONTH;
 import static christmas.constants.Number.EVENT_YEAR;
+import static christmas.domain.discount.constants.DiscountInfo.WEEKDAY_DISCOUNT_PRICE;
+import static christmas.domain.discount.constants.DiscountInfo.WEEKDAY_DISCOUNT_STRING;
 
 import christmas.domain.Orders;
 import christmas.domain.discount.Discount;
@@ -9,23 +11,19 @@ import christmas.domain.vo.MenuType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-public class WeekendDiscount implements Discount {
-
-    private static final int WEEKEND_DISCOUNT_PRICE = 2023;
-    private static final String WEEKEND_DISCOUNT_STRING = "주말 할인";
-
+public class WeekdayDiscount implements Discount {
     @Override
     public int applyDiscount(Orders orders) {
         int orderDay = orders.getDate();
         if (isWeekend(orderDay)) {
-            return getDiscountPrice(orders);
+            return 0;
         }
-        return 0;
+        return getDiscountPrice(orders);
     }
 
     @Override
     public String getDiscountName() {
-        return WEEKEND_DISCOUNT_STRING;
+        return WEEKDAY_DISCOUNT_STRING;
     }
 
     public boolean isWeekend(int orderDay) {
@@ -36,7 +34,7 @@ public class WeekendDiscount implements Discount {
     }
 
     private int getDiscountPrice(Orders orders) {
-        int mainMenuCount = orders.findCountMenuType(MenuType.MAIN);
-        return mainMenuCount * WEEKEND_DISCOUNT_PRICE;
+        int desertMenuCount = orders.findCountMenuType(MenuType.DESSERT);
+        return desertMenuCount * WEEKDAY_DISCOUNT_PRICE;
     }
 }

@@ -2,7 +2,7 @@ package christmas.service;
 
 import static christmas.constants.Number.GIFT_THRESHOLD;
 
-import christmas.domain.discount.Gift;
+import christmas.domain.discount.strategies.Gift;
 import christmas.dto.BenefitDto;
 import christmas.dto.OrdersDto;
 

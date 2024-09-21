@@ -77,7 +77,7 @@ public class EventPlannerController {
         outputView.printPreTotalPrice(benefitDto.preTotalPrice());
     }
 
-    private void outputGiftAvailable() {
+    private void outputGiftAvailable() { // 증정 품복 부여 여부 출력
         String giftMessage = benefitDto.getGiftMessage();
         outputView.printIsGiftAvailable(giftMessage);
     }
