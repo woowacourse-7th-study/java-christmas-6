@@ -7,7 +7,8 @@ public enum ViewMessage {
     ANNOUNCE_EVENT_BENEFITS("12월 26일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!"),
     NOTICE_MENU("<주문 메뉴>"),
     NOTICE_PRE_TOTAL_PRICE("<할인 전 총주문 금액>"),
-    NOTICE_GIFT("<증정 메뉴>");
+    NOTICE_GIFT("<증정 메뉴>"),
+    NOTICE_DISCOUNT("<혜택 내역>");
 
     private final String message;
 

@@ -36,6 +36,7 @@ public class EventPlannerController {
         outputEventBenefits();
         outputPreTotalPrice();
         outputGiftAvailable();
+        outputDiscountResult();
     }
 
     private void runUntilNoException(Runnable runnable) {
@@ -80,5 +81,8 @@ public class EventPlannerController {
     private void outputGiftAvailable() { // 증정 품복 부여 여부 출력
         String giftMessage = benefitDto.getGiftMessage();
         outputView.printIsGiftAvailable(giftMessage);
+    }
+    private void outputDiscountResult(){ // 할인 혜택 내역 결과 출력
+        outputView.printDiscoutResults();
     }
 }
