@@ -8,6 +8,7 @@ import static christmas.constants.ViewMessage.NOTICE_MENU;
 import static christmas.constants.ViewMessage.NOTICE_PRE_TOTAL_PRICE;
 
 import christmas.dto.OrdersDto;
+import java.util.Map;
 
 public class OutputView {
     public void printHeaderNotice() {
@@ -44,9 +45,17 @@ public class OutputView {
         System.out.println(giftMessage);
     }
 
-    public void printDiscoutResults(){
+    public void printDiscoutResults(Map<String, Long> discountResults){
         printWhiteSpace();
-        System.out.println(NOTICE_DISCOUNT);
+        if (discountResults.isEmpty()) {
+            System.out.println("혜택 내역: 없음");
+        } else {
+            System.out.println(NOTICE_DISCOUNT);
+            discountResults.forEach((discountName, amount) ->
+                System.out.println(discountName + ": -" + amount + "원")
+            );
+        }
+
     }
 
     private static void printWhiteSpace() {

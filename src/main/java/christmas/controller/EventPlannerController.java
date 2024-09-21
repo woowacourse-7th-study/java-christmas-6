@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.constants.exception.InputException;
+import christmas.domain.discount.DiscountManager;
 import christmas.dto.BenefitDto;
 import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
@@ -10,6 +11,7 @@ import christmas.util.DateParserUtil;
 import christmas.util.OrderParserUtil;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.Map;
 
 public class EventPlannerController {
     private final InputView inputView;
@@ -83,6 +85,9 @@ public class EventPlannerController {
         outputView.printIsGiftAvailable(giftMessage);
     }
     private void outputDiscountResult(){ // 할인 혜택 내역 결과 출력
-        outputView.printDiscoutResults();
+        DiscountManager discountManager;
+        discountManager = new DiscountManager(ordersDto.orders(), benefitDto.gift());
+        Map<String, Long> discountResults = discountManager.getAvailableDiscounts();
+        outputView.printDiscoutResults(discountResults);
     }
 }
