@@ -5,6 +5,7 @@ import static christmas.constants.exception.error.ErrorMessage.INVALID_ORDER;
 import christmas.constants.exception.InputException;
 import christmas.domain.vo.MenuType;
 import christmas.domain.vo.Product;
+import christmas.dto.VisitDateDto;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,10 +13,19 @@ import java.util.Set;
 public class Orders {
 
     private final List<OrderProduct> orderProducts;
+    private final VisitDateDto visitDateDto;
 
-    public Orders(List<OrderProduct> orderProducts) {
+    public Orders(List<OrderProduct> orderProducts, VisitDateDto visitDateDto) {
         validateOrders(orderProducts);
         this.orderProducts = orderProducts;
+        this.visitDateDto = visitDateDto;
+    }
+
+    public int findCountMenuType(MenuType targetMenuType) {
+        return orderProducts.stream()
+            .filter(orderProduct -> orderProduct.isSameMenuType(targetMenuType))
+            .mapToInt(OrderProduct::getCount)
+            .sum();
     }
 
     private void validateOrders(List<OrderProduct> orderProducts) {
@@ -56,5 +66,9 @@ public class Orders {
 
     public List<OrderProduct> getOrderProducts() {
         return orderProducts;
+    }
+
+    public int getDate(){
+        return visitDateDto.date();
     }
 }

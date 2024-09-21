@@ -5,6 +5,7 @@ import static christmas.constants.Number.COUNT_MIN;
 import static christmas.constants.exception.error.ErrorMessage.INVALID_ORDER;
 
 import christmas.constants.exception.InputException;
+import christmas.domain.vo.MenuType;
 import christmas.domain.vo.Product;
 import java.util.Objects;
 
@@ -18,6 +19,14 @@ public class OrderProduct {
         validateCount(count);
         this.product = product;
         this.count = count;
+    }
+
+    public boolean isSameMenuType(MenuType targetMenuType) {
+        return this.product.getMenuType() == targetMenuType;
+    }
+
+    public int calculatePrice() {
+        return product.getPrice() * count;
     }
 
     private static void validateProduct(final Product product) { // 주문한 메뉴가 있는지
@@ -43,10 +52,6 @@ public class OrderProduct {
 
     private static boolean isValidCountMinMax(final int count) {
         return COUNT_MIN <= count && count <= COUNT_MAX;
-    }
-
-    public int calculatePrice() {
-        return product.getPrice() * count;
     }
 
     @Override

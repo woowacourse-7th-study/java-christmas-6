@@ -1,7 +1,10 @@
 package christmas.view;
 
+import static christmas.constants.Symbol.COUNT_STRING;
+import static christmas.constants.Symbol.FORMAT_NUMBER;
 import static christmas.constants.ViewMessage.ANNOUNCE_EVENT_BENEFITS;
 import static christmas.constants.ViewMessage.EVENT_PLANNER_NOTICE;
+import static christmas.constants.ViewMessage.NOTICE_DISCOUNT;
 import static christmas.constants.ViewMessage.NOTICE_GIFT;
 import static christmas.constants.ViewMessage.NOTICE_MENU;
 import static christmas.constants.ViewMessage.NOTICE_PRE_TOTAL_PRICE;
@@ -22,25 +25,27 @@ public class OutputView {
         System.out.println(result);
     }
 
-    public void printOrderDetails(OrdersDto ordersDto) {
+    public void printOrderDetails(String ordersList) {
         System.out.println(NOTICE_MENU);
-        ordersDto.orders().getOrderProducts().stream()
-            .forEach(orderProduct ->
-                System.out.println(
-                    orderProduct.getProductName() + " " + orderProduct.getCount() + "개")
-            );
+        System.out.println(ordersList);
     }
 
     public void printPreTotalPrice(final int preTotalPrice) {
-        printWhiteSpace();
         System.out.println(NOTICE_PRE_TOTAL_PRICE);
-        System.out.printf("%,d원%n", preTotalPrice);
+        System.out.printf(FORMAT_NUMBER, preTotalPrice);
+        printWhiteSpace();
     }
 
     public void printIsGiftAvailable(final String giftMessage) {
         printWhiteSpace();
         System.out.println(NOTICE_GIFT);
         System.out.println(giftMessage);
+    }
+
+    public void printDiscoutResults(final String discountMessage){
+        printWhiteSpace();
+        System.out.println(NOTICE_DISCOUNT);
+        System.out.println(discountMessage);
     }
 
     private static void printWhiteSpace() {

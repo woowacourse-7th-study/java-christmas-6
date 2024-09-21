@@ -36,7 +36,6 @@
     - 할인 후 예상 금액 계산 `CalculatePostTotalPrice`
   - ### ConvertService
     - 총 혜택 금액 -> 이벤트 배지 - `PriceToBadge`
-    - 할인 전 총 주문 금액 -> 증정 메뉴 유무 - `PriceToGift`
     - 총 주문 금액(10,000 이상) -> 혜택의 유무 - `PriceToBenefits`
 
 ---
