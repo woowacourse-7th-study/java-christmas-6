@@ -1,4 +1,4 @@
-package christmas.util;
+package christmas.util.parser;
 
 import christmas.domain.VisitDate;
 import christmas.dto.VisitDateDto;

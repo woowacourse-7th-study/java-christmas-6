@@ -7,9 +7,10 @@ import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
 import christmas.service.CalculateService;
 import christmas.service.DiscountService;
-import christmas.util.DateParserUtil;
-import christmas.util.DiscountFormatUtil;
-import christmas.util.OrderParserUtil;
+import christmas.util.format.OrdersFormatUtil;
+import christmas.util.parser.DateParserUtil;
+import christmas.util.format.DiscountFormatUtil;
+import christmas.util.parser.OrderParserUtil;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -73,7 +74,8 @@ public class EventPlannerController {
 
     private void outputEventBenefits() { // 혜택 출력
         outputView.printHeaderEventBenefits(); // 안내 문구 출력
-        outputView.printOrderDetails(ordersDto); // 주문 메뉴 출력
+        String ordersList = OrdersFormatUtil.formatOrdersList(ordersDto);
+        outputView.printOrderDetails(ordersList); // 주문 메뉴 출력
     }
 
     private void outputPreTotalPrice() { // 할인 전 총주문 금액 출력
