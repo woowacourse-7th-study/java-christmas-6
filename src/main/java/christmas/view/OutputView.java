@@ -59,9 +59,10 @@ public class OutputView {
         System.out.println(totalPriceMessage);
     }
 
-    public void printBadgeType(){
+    public void printBadgeType(final String badgeTypeMessage){
         printWhiteSpace();
         System.out.println(NOTICE_BADGE_TYPE);
+        System.out.println(badgeTypeMessage);
     }
 
     private static void printWhiteSpace() {

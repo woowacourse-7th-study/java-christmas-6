@@ -1,12 +1,14 @@
 package christmas.controller;
 
 import christmas.constants.exception.InputException;
+import christmas.domain.vo.BadgeType;
 import christmas.dto.BenefitDto;
 import christmas.dto.DiscountDto;
 import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
 import christmas.service.CalculateService;
 import christmas.service.DiscountService;
+import christmas.util.format.BadgeFormatUtil;
 import christmas.util.format.OrdersFormatUtil;
 import christmas.util.parser.DateParserUtil;
 import christmas.util.format.DiscountFormatUtil;
@@ -109,6 +111,8 @@ public class EventPlannerController {
     }
 
     private void outputEventBadgeType() { // 12월 이벤트 배지 출력
-        outputView.printBadgeType();
+        BadgeType badgeType = calculateService.calculateBadgeType(discountDto);
+        String badgeTypeMessage = BadgeFormatUtil.formatBadgeType(badgeType);
+        outputView.printBadgeType(badgeTypeMessage);
     }
 }
