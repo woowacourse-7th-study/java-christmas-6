@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static christmas.constants.Symbol.COUNT_STRING;
 import static christmas.constants.Symbol.FORMAT_NUMBER;
 import static christmas.constants.ViewMessage.ANNOUNCE_EVENT_BENEFITS;
 import static christmas.constants.ViewMessage.EVENT_PLANNER_NOTICE;
@@ -7,6 +8,7 @@ import static christmas.constants.ViewMessage.NOTICE_DISCOUNT;
 import static christmas.constants.ViewMessage.NOTICE_GIFT;
 import static christmas.constants.ViewMessage.NOTICE_MENU;
 import static christmas.constants.ViewMessage.NOTICE_PRE_TOTAL_PRICE;
+
 
 public class OutputView {
     public void printHeaderNotice() {
