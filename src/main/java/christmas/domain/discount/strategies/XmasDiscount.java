@@ -8,7 +8,7 @@ import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT_STR
 import christmas.domain.Orders;
 import christmas.domain.discount.Discount;
 
-public class XmasDdayDiscount implements Discount {
+public class XmasDiscount implements Discount {
     @Override
     public int applyDiscount(Orders orders) {
         int orderDay = orders.getDate();
