@@ -98,17 +98,17 @@ public class EventPlannerController {
     }
 
     private void outputTotalDiscoutPrice() { // 총 혜택 금액 출력
-        String totalDiscountMessage = DiscountFormatUtil.formatTotalDiscount(ordersDto,
-            discountDto);
+        String totalDiscountMessage = DiscountFormatUtil.formatTotalDiscount(discountDto);
         outputView.printTotalDiscountPrice(totalDiscountMessage);
     }
 
     private void outputTotalPriceAfterDiscount() { // 할인 후 예상 금액 출력
-        String totalPriceMessage = DiscountFormatUtil.formatTotalPriceAfterDiscount(discountDto);
+        String totalPriceMessage = DiscountFormatUtil.formatTotalPriceAfterDiscount(ordersDto,
+            discountDto);
         outputView.printTotalPriceAfterDiscount(totalPriceMessage);
     }
 
-    private void outputEventBadgeType(){ // 12월 이벤트 배지 출력
+    private void outputEventBadgeType() { // 12월 이벤트 배지 출력
         outputView.printBadgeType();
     }
 }

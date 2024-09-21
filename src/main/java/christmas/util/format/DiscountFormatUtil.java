@@ -32,18 +32,18 @@ public class DiscountFormatUtil {
         return discountResults.isEmpty();
     }
 
-    public static String formatTotalDiscount(OrdersDto ordersDto, DiscountDto discountDto) {
+    public static String formatTotalDiscount(DiscountDto discountDto) {
         StringBuilder result = new StringBuilder();
-        int totalDiscount = ordersDto.orders().calculatePreTotalPrice() - discountDto.totalDiscountPrice();
+        int totalDiscount = discountDto.totalDiscountPrice();
         result.append(MINUS)
             .append(String.format(FORMAT_NUMBER, totalDiscount));
 
         return result.toString();
     }
 
-    public static String formatTotalPriceAfterDiscount(DiscountDto discountDto) {
+    public static String formatTotalPriceAfterDiscount(OrdersDto ordersDto, DiscountDto discountDto) {
         StringBuilder result = new StringBuilder();
-        int totalPrice = discountDto.totalDiscountPrice();
+        int totalPrice = ordersDto.orders().calculatePreTotalPrice() - discountDto.totalDiscountPrice();
         result.append(String.format(FORMAT_NUMBER, totalPrice));
 
         return result.toString();
