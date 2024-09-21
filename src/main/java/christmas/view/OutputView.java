@@ -7,6 +7,7 @@ import static christmas.constants.ViewMessage.NOTICE_DISCOUNT;
 import static christmas.constants.ViewMessage.NOTICE_GIFT;
 import static christmas.constants.ViewMessage.NOTICE_MENU;
 import static christmas.constants.ViewMessage.NOTICE_PRE_TOTAL_PRICE;
+import static christmas.constants.ViewMessage.NOTICE_TOTAL_DISCOUNT;
 
 public class OutputView {
     public void printHeaderNotice() {
@@ -43,6 +44,11 @@ public class OutputView {
         printWhiteSpace();
         System.out.println(NOTICE_DISCOUNT);
         System.out.println(discountMessage);
+    }
+
+    public void printTotalDiscountPrice(final String totalDiscountMessage){
+        System.out.println(NOTICE_TOTAL_DISCOUNT);
+        System.out.println(totalDiscountMessage);
     }
 
     private static void printWhiteSpace() {
