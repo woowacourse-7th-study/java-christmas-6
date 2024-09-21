@@ -1,14 +1,14 @@
 package christmas.controller;
 
 import christmas.constants.error.type.UserInputException;
-import christmas.converter.Converter;
+import christmas.converter.InputConverter;
 import christmas.dto.OrderResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Order;
 import christmas.model.VisitDay;
 import christmas.service.OrderService;
 import christmas.service.VisitDayService;
-import christmas.validator.Validator;
+import christmas.validator.InputValidator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -31,8 +31,8 @@ public class ChristmasEventController {
         while (true) {
             try {
                 String input = InputView.readVisitDay();
-                Validator.validateVisitDay(input);
-                int visitDay = Converter.toInteger(input);
+                InputValidator.validateVisitDay(input);
+                int visitDay = InputConverter.toInteger(input);
                 return new VisitDay(visitDay);
             } catch (UserInputException e) {
                 OutputView.printErrorMessage(e.getMessage());
@@ -44,8 +44,8 @@ public class ChristmasEventController {
         while (true) {
             try {
                 String input = InputView.readMenu();
-                Validator.validateMenu(input);
-                Map<String, Integer> menu = Converter.toMap(input);
+                InputValidator.validateMenu(input);
+                Map<String, Integer> menu = InputConverter.toMap(input);
                 return new Order(menu);
             } catch (UserInputException e) {
                 OutputView.printErrorMessage(e.getMessage());

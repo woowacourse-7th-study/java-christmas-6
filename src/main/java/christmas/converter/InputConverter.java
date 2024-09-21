@@ -10,8 +10,8 @@ import static christmas.constants.Symbol.DASH;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_OTHER_THAN_NUMERIC;
 
-public class Converter {
-    private Converter() {
+public class InputConverter {
+    private InputConverter() {
     }
 
     public static int toInteger(String input) {

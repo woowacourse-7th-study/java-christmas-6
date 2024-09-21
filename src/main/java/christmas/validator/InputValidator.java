@@ -7,8 +7,8 @@ import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_JUST_BLANK;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_STRIP;
 
-public class Validator {
-    private Validator() {
+public class InputValidator {
+    private InputValidator() {
     }
 
     public static void validateVisitDay(String input) {
