@@ -1,4 +1,4 @@
-package christmas.domain.discount;
+package christmas.domain.discount.strategies;
 
 import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT_PRICE;
 import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT_STRING;
