@@ -1,5 +1,7 @@
 package christmas.view;
 
+import static christmas.constants.Symbol.COUNT_STRING;
+import static christmas.constants.Symbol.FORMAT_NUMBER;
 import static christmas.constants.ViewMessage.ANNOUNCE_EVENT_BENEFITS;
 import static christmas.constants.ViewMessage.EVENT_PLANNER_NOTICE;
 import static christmas.constants.ViewMessage.NOTICE_DISCOUNT;
@@ -8,7 +10,6 @@ import static christmas.constants.ViewMessage.NOTICE_MENU;
 import static christmas.constants.ViewMessage.NOTICE_PRE_TOTAL_PRICE;
 
 import christmas.dto.OrdersDto;
-import java.util.Map;
 
 public class OutputView {
     public void printHeaderNotice() {
@@ -26,17 +27,18 @@ public class OutputView {
 
     public void printOrderDetails(OrdersDto ordersDto) {
         System.out.println(NOTICE_MENU);
-        ordersDto.orders().getOrderProducts().stream()
+        ordersDto.orders().getOrderProducts()
             .forEach(orderProduct ->
                 System.out.println(
-                    orderProduct.getProductName() + " " + orderProduct.getCount() + "개")
+                    orderProduct.getProductName() + " " + orderProduct.getCount() + COUNT_STRING)
             );
     }
 
     public void printPreTotalPrice(final int preTotalPrice) {
         printWhiteSpace();
         System.out.println(NOTICE_PRE_TOTAL_PRICE);
-        System.out.printf("%,d원%n", preTotalPrice);
+        System.out.printf(FORMAT_NUMBER, preTotalPrice);
+        printWhiteSpace();
     }
 
     public void printIsGiftAvailable(final String giftMessage) {
@@ -45,17 +47,10 @@ public class OutputView {
         System.out.println(giftMessage);
     }
 
-    public void printDiscoutResults(Map<String, Long> discountResults){
+    public void printDiscoutResults(final String discountMessage){
         printWhiteSpace();
-        if (discountResults.isEmpty()) {
-            System.out.println("혜택 내역: 없음");
-        } else {
-            System.out.println(NOTICE_DISCOUNT);
-            discountResults.forEach((discountName, amount) ->
-                System.out.println(discountName + ": -" + amount + "원")
-            );
-        }
-
+        System.out.println(NOTICE_DISCOUNT);
+        System.out.println(discountMessage);
     }
 
     private static void printWhiteSpace() {

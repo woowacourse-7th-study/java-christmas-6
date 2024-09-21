@@ -29,7 +29,7 @@ public final class DiscountManager {
         this.discounts = initializeDiscountStrategies();
     }
 
-    public Map<String, Long> getAvailableDiscounts() { // 할인이 적용되는 최소 금액인지 확인
+    public Map<String, Integer> getAvailableDiscounts() { // 할인이 적용되는 최소 금액인지 확인
         if (orders.calculatePreTotalPrice() < DISCOUNT_MIN_PRICE) {
             return Collections.emptyMap();
         }
@@ -46,14 +46,16 @@ public final class DiscountManager {
         );
     }
 
-    private Map<String, Long> getDiscountResults() { // 할인 되는 전략 추가
-        Map<String, Long> result = new HashMap<>();
-        discounts.forEach((key, discount) -> addDiscountIfApplicable(orders, result, key, discount)); // 할인이 적용되는지 확인
+    private Map<String, Integer> getDiscountResults() { // 할인 되는 전략 추가
+        Map<String, Integer> result = new HashMap<>();
+        discounts.forEach((key, discount) -> addDiscountIfApplicable(orders, result, key,
+            discount)); // 할인이 적용되는지 확인
         return result;
     }
 
-    private void addDiscountIfApplicable(Orders orders, Map<String, Long> result, String key, Discount discount) {
-        long discountAmount = discount.applyDiscount(orders);
+    private void addDiscountIfApplicable(Orders orders, Map<String, Integer> result, String key,
+        Discount discount) {
+        int discountAmount = discount.applyDiscount(orders);
         if (discountAmount > 0) {
             result.put(key, discountAmount);
         }

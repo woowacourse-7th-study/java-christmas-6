@@ -1,34 +1,35 @@
 package christmas.controller;
 
 import christmas.constants.exception.InputException;
-import christmas.domain.discount.DiscountManager;
 import christmas.dto.BenefitDto;
+import christmas.dto.DiscountDto;
 import christmas.dto.OrdersDto;
 import christmas.dto.VisitDateDto;
 import christmas.service.CalculateService;
-import christmas.service.ConvertService;
+import christmas.service.DiscountService;
 import christmas.util.DateParserUtil;
+import christmas.util.DiscountFormatUtil;
 import christmas.util.OrderParserUtil;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import java.util.Map;
 
 public class EventPlannerController {
     private final InputView inputView;
     private final OutputView outputView;
     private final CalculateService calculateService;
-    private final ConvertService convertService;
+    private final DiscountService discountService;
 
     private VisitDateDto visitDateDto;
     private BenefitDto benefitDto;
     private OrdersDto ordersDto;
+    private DiscountDto discountDto;
 
     public EventPlannerController(InputView inputView, OutputView outputView,
-        CalculateService calculateService, ConvertService convertService) {
+        CalculateService calculateService, DiscountService discountService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.calculateService = calculateService;
-        this.convertService = convertService;
+        this.discountService = discountService;
     }
 
     public void run() {
@@ -85,9 +86,8 @@ public class EventPlannerController {
         outputView.printIsGiftAvailable(giftMessage);
     }
     private void outputDiscountResult(){ // 할인 혜택 내역 결과 출력
-        DiscountManager discountManager;
-        discountManager = new DiscountManager(ordersDto.orders(), benefitDto.gift());
-        Map<String, Long> discountResults = discountManager.getAvailableDiscounts();
-        outputView.printDiscoutResults(discountResults);
+        discountDto = discountService.createDiscountDto(ordersDto,benefitDto);
+        String discountMessage = DiscountFormatUtil.formatDiscountResults(discountDto.discounts());
+        outputView.printDiscoutResults(discountMessage);
     }
 }

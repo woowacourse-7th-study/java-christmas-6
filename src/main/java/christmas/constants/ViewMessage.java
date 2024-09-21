@@ -8,7 +8,8 @@ public enum ViewMessage {
     NOTICE_MENU("<주문 메뉴>"),
     NOTICE_PRE_TOTAL_PRICE("<할인 전 총주문 금액>"),
     NOTICE_GIFT("<증정 메뉴>"),
-    NOTICE_DISCOUNT("<혜택 내역>");
+    NOTICE_DISCOUNT("<혜택 내역>"),
+    NON_BENEFIT("없음");
 
     private final String message;
 
