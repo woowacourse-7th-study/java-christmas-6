@@ -7,6 +7,7 @@ import static christmas.constants.ViewMessage.NOTICE_DISCOUNT;
 import static christmas.constants.ViewMessage.NOTICE_GIFT;
 import static christmas.constants.ViewMessage.NOTICE_MENU;
 import static christmas.constants.ViewMessage.NOTICE_PRE_TOTAL_PRICE;
+import static christmas.constants.ViewMessage.NOTICE_PRICE_AFTER_DISCOUNT;
 import static christmas.constants.ViewMessage.NOTICE_TOTAL_DISCOUNT;
 
 public class OutputView {
@@ -40,15 +41,21 @@ public class OutputView {
         System.out.println(giftMessage);
     }
 
-    public void printDiscoutResults(final String discountMessage){
+    public void printDiscoutResults(final String discountMessage) {
         printWhiteSpace();
         System.out.println(NOTICE_DISCOUNT);
         System.out.println(discountMessage);
     }
 
-    public void printTotalDiscountPrice(final String totalDiscountMessage){
+    public void printTotalDiscountPrice(final String totalDiscountMessage) {
         System.out.println(NOTICE_TOTAL_DISCOUNT);
         System.out.println(totalDiscountMessage);
+    }
+
+    public void printTotalPriceAfterDiscount(final String totalPriceMessage) {
+        printWhiteSpace();
+        System.out.println(NOTICE_PRICE_AFTER_DISCOUNT);
+        System.out.println(totalPriceMessage);
     }
 
     private static void printWhiteSpace() {

@@ -12,7 +12,6 @@ import christmas.dto.OrdersDto;
 import java.util.Map;
 
 public class DiscountFormatUtil {
-
     public static String formatDiscountResults(Map<String, Integer> discountResults) {
         StringBuilder result = new StringBuilder();
         if (isDiscountNonBenefit(discountResults)) {
@@ -38,6 +37,14 @@ public class DiscountFormatUtil {
         int totalDiscount = ordersDto.orders().calculatePreTotalPrice() - discountDto.totalDiscountPrice();
         result.append(MINUS)
             .append(String.format(FORMAT_NUMBER, totalDiscount));
+
+        return result.toString();
+    }
+
+    public static String formatTotalPriceAfterDiscount(DiscountDto discountDto) {
+        StringBuilder result = new StringBuilder();
+        int totalPrice = discountDto.totalDiscountPrice();
+        result.append(String.format(FORMAT_NUMBER, totalPrice));
 
         return result.toString();
     }
