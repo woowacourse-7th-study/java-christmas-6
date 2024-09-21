@@ -25,17 +25,12 @@ public class OutputView {
         System.out.println(result);
     }
 
-    public void printOrderDetails(OrdersDto ordersDto) {
+    public void printOrderDetails(String ordersList) {
         System.out.println(NOTICE_MENU);
-        ordersDto.orders().getOrderProducts()
-            .forEach(orderProduct ->
-                System.out.println(
-                    orderProduct.getProductName() + " " + orderProduct.getCount() + COUNT_STRING)
-            );
+        System.out.println(ordersList);
     }
 
     public void printPreTotalPrice(final int preTotalPrice) {
-        printWhiteSpace();
         System.out.println(NOTICE_PRE_TOTAL_PRICE);
         System.out.printf(FORMAT_NUMBER, preTotalPrice);
         printWhiteSpace();

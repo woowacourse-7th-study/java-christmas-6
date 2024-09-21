@@ -7,7 +7,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import christmas.constants.exception.InputException;
 import christmas.dto.VisitDateDto;
-import christmas.util.OrderParserUtil;
+import christmas.util.parser.OrderParserUtil;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

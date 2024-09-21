@@ -1,4 +1,4 @@
-package christmas.util;
+package christmas.util.parser;
 
 import static christmas.constants.Symbol.COMMA;
 import static christmas.constants.Symbol.HYPHEN;
