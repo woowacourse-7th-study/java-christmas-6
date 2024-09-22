@@ -1,10 +1,13 @@
 package christmas.view;
 
+import christmas.constants.Menu;
 import christmas.dto.OrderResponse;
 import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
 
 import static christmas.constants.ViewMessage.GREETING_MESSAGE;
+import static christmas.constants.ViewMessage.GiveawayMenuHeader;
+import static christmas.constants.ViewMessage.NONE;
 import static christmas.constants.ViewMessage.ORDER_HEADER;
 import static christmas.constants.ViewMessage.ORDER_INFORMATION;
 import static christmas.constants.ViewMessage.PRINT_DAY;
@@ -52,5 +55,18 @@ public class OutputView {
     public static void printTotalPriceBeforeDiscount(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
         String priceBeforeDiscount = String.format(TOTAL_PRICE_BEFORE_DISCOUNT, priceBeforeDiscountResponse.priceBeforeDiscount());
         System.out.println(priceBeforeDiscount);
+    }
+
+    public static void printGiveawayMenuHeader() {
+        printNewLine();
+        System.out.println(GiveawayMenuHeader);
+    }
+
+    public static void printGiveawayMenu(Menu menu) {
+        System.out.println(menu.getName() + " 1개");
+    }
+
+    public static void printGiveawayMenu() {
+        System.out.println(NONE);
     }
 }

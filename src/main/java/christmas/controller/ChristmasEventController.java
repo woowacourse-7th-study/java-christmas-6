@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
 import christmas.converter.InputConverter;
 import christmas.dto.OrderResponse;
@@ -16,13 +17,16 @@ import christmas.view.OutputView;
 import java.util.Map;
 
 public class ChristmasEventController {
+    private static final int SPENDING_THRESHOLD = 120000;
+
     public void run() {
         printGreetingMessage();
         VisitDay visitDay = readVisitDay();
         Order order = readMenu();
         printDay(visitDay);
         printOrderInformation(order);
-        printTotalPriceBeforeDiscount(order);
+        PriceBeforeDiscountResponse priceBeforeDiscountResponse = printTotalPriceBeforeDiscount(order);
+        printGiveawayMenu(priceBeforeDiscountResponse);
     }
 
     private void printGreetingMessage() {
@@ -68,10 +72,24 @@ public class ChristmasEventController {
         OutputView.printOrderInformation(orderResponse);
     }
 
-    private void printTotalPriceBeforeDiscount(Order order) {
+    private PriceBeforeDiscountResponse printTotalPriceBeforeDiscount(Order order) {
         OutputView.printTotalPriceBeforeDiscountHeader();
         OrderService orderService = new OrderService();
         PriceBeforeDiscountResponse priceBeforeDiscountResponse = orderService.calculateTotalPriceBeforeDiscount(order);
         OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscountResponse);
+        return priceBeforeDiscountResponse;
+    }
+
+    private void printGiveawayMenu(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
+        OutputView.printGiveawayMenuHeader();
+        if (isQualifiedForGiveaway(priceBeforeDiscountResponse)) {
+            OutputView.printGiveawayMenu(Menu.CHAMPAGNE);
+            return;
+        }
+        OutputView.printGiveawayMenu();
+    }
+
+    private boolean isQualifiedForGiveaway(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
+        return priceBeforeDiscountResponse.priceBeforeDiscount() > SPENDING_THRESHOLD;
     }
 }
