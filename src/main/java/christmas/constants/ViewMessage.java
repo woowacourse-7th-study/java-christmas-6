@@ -10,4 +10,6 @@ public class ViewMessage {
     public static final String ORDER_HEADER = "<주문 메뉴>";
     public static final String ORDER_INFORMATION = "%s %d개";
     public static final String PRINT_DAY = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!";
+    public static final String TOTAL_PRICE_BEFORE_DISCOUNT_HEADER = "<할인 전 총주문 금액>";
+    public static final String TOTAL_PRICE_BEFORE_DISCOUNT = "%,d원";
 }

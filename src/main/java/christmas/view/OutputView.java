@@ -1,15 +1,22 @@
 package christmas.view;
 
 import christmas.dto.OrderResponse;
+import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
 
 import static christmas.constants.ViewMessage.GREETING_MESSAGE;
 import static christmas.constants.ViewMessage.ORDER_HEADER;
 import static christmas.constants.ViewMessage.ORDER_INFORMATION;
 import static christmas.constants.ViewMessage.PRINT_DAY;
+import static christmas.constants.ViewMessage.TOTAL_PRICE_BEFORE_DISCOUNT;
+import static christmas.constants.ViewMessage.TOTAL_PRICE_BEFORE_DISCOUNT_HEADER;
 
 public class OutputView {
     private OutputView() {
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 
     public static void printGreetingMessage() {
@@ -26,7 +33,7 @@ public class OutputView {
     }
 
     public static void printOrderHeader() {
-        System.out.println();
+        printNewLine();
         System.out.println(ORDER_HEADER);
     }
 
@@ -35,5 +42,15 @@ public class OutputView {
             String orderInformation = String.format(ORDER_INFORMATION, orderResponse.getName(i), orderResponse.getQuantity(i));
             System.out.println(orderInformation);
         }
+    }
+
+    public static void printTotalPriceBeforeDiscountHeader() {
+        printNewLine();
+        System.out.println(TOTAL_PRICE_BEFORE_DISCOUNT_HEADER);
+    }
+
+    public static void printTotalPriceBeforeDiscount(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
+        String priceBeforeDiscount = String.format(TOTAL_PRICE_BEFORE_DISCOUNT, priceBeforeDiscountResponse.priceBeforeDiscount());
+        System.out.println(priceBeforeDiscount);
     }
 }

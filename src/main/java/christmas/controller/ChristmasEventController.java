@@ -3,6 +3,7 @@ package christmas.controller;
 import christmas.constants.error.type.UserInputException;
 import christmas.converter.InputConverter;
 import christmas.dto.OrderResponse;
+import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Order;
 import christmas.model.VisitDay;
@@ -21,6 +22,7 @@ public class ChristmasEventController {
         Order order = readMenu();
         printDay(visitDay);
         printOrderInformation(order);
+        printTotalPriceBeforeDiscount(order);
     }
 
     private void printGreetingMessage() {
@@ -64,5 +66,12 @@ public class ChristmasEventController {
         OrderService orderService = new OrderService();
         OrderResponse orderResponse = orderService.createOrderResponse(order);
         OutputView.printOrderInformation(orderResponse);
+    }
+
+    private void printTotalPriceBeforeDiscount(Order order) {
+        OutputView.printTotalPriceBeforeDiscountHeader();
+        OrderService orderService = new OrderService();
+        PriceBeforeDiscountResponse priceBeforeDiscountResponse = orderService.calculateTotalPriceBeforeDiscount(order);
+        OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscountResponse);
     }
 }

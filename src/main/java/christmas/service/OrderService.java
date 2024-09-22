@@ -1,11 +1,17 @@
 package christmas.service;
 
+import christmas.constants.Menu;
+import christmas.constants.error.type.UserInputException;
 import christmas.dto.OrderResponse;
+import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.model.Order;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 
 public class OrderService {
     public OrderResponse createOrderResponse(Order order) {
@@ -28,5 +34,24 @@ public class OrderService {
             quantities.add(entry.getValue());
         }
         return quantities;
+    }
+
+    public PriceBeforeDiscountResponse calculateTotalPriceBeforeDiscount(Order order) {
+        int totalPrice = 0;
+        Map<String, Integer> items = order.getItems();
+
+        for (Map.Entry<String, Integer> entry : items.entrySet()) {
+            String orderName = entry.getKey();
+            int quantity = entry.getValue();
+
+            Menu selectedMenu = Arrays.stream(Menu.values())
+                    .filter(menu -> menu.getName().equals(orderName))
+                    .findFirst()
+                    .orElseThrow(() -> new UserInputException(NOT_ALLOWED_ORDER));
+
+            totalPrice += selectedMenu.getPrice() * quantity;
+        }
+
+        return new PriceBeforeDiscountResponse(totalPrice);
     }
 }
