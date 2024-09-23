@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT_STRING;
+import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class XmasDiscountTest {
@@ -62,6 +62,6 @@ class XmasDiscountTest {
         String discountName = xmasDiscount.getDiscountName();
 
         // then
-        assertThat(discountName).isEqualTo(XMAS_DISCOUNT_STRING);
+        assertThat(discountName).isEqualTo(XMAS_DISCOUNT.toString());
     }
 }

@@ -1,11 +1,11 @@
 package christmas.domain.discount;
 
-import static christmas.domain.discount.constants.DiscountInfo.DISCOUNT_MIN_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT_STRING;
-import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT_STRING;
-import static christmas.domain.discount.constants.DiscountInfo.WEEKDAY_DISCOUNT_STRING;
-import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT_STRING;
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT_STRING;
+import static christmas.domain.discount.constants.DiscountNumeric.DISCOUNT_MIN_PRICE;
+import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountInfo.WEEKDAY_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
 
 import christmas.domain.Orders;
 
@@ -38,11 +38,11 @@ public final class DiscountManager {
 
     private Map<String, Discount> initializeDiscountStrategies() {
         return Map.ofEntries(
-            Map.entry(XMAS_DISCOUNT_STRING, new XmasDiscount()),
-            Map.entry(SPECIAL_DISCOUNT_STRING, new SpecialDiscount()),
-            Map.entry(WEEKDAY_DISCOUNT_STRING, new WeekdayDiscount()),
-            Map.entry(WEEKEND_DISCOUNT_STRING, new WeekendDiscount()),
-            Map.entry(GIFT_DISCOUNT_STRING, gift)
+            Map.entry(XMAS_DISCOUNT.toString(), new XmasDiscount()),
+            Map.entry(SPECIAL_DISCOUNT.toString(), new SpecialDiscount()),
+            Map.entry(WEEKDAY_DISCOUNT.toString(), new WeekdayDiscount()),
+            Map.entry(WEEKEND_DISCOUNT.toString(), new WeekendDiscount()),
+            Map.entry(GIFT_DISCOUNT.toString(), gift)
         );
     }
 

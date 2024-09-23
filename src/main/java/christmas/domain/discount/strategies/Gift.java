@@ -1,7 +1,7 @@
 package christmas.domain.discount.strategies;
 
 import static christmas.domain.discount.constants.DiscountInfo.DEFAULT_GIFT_QUANTITY;
-import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT_STRING;
+import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT;
 
 import christmas.domain.Orders;
 import christmas.domain.discount.Discount;
@@ -24,7 +24,7 @@ public class Gift implements Discount {
 
     @Override
     public String getDiscountName() {
-        return GIFT_DISCOUNT_STRING;
+        return GIFT_DISCOUNT.toString();
     }
 
     public String getGiftMessage() {

@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static christmas.domain.discount.constants.DiscountInfo.DISCOUNT_MIN_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT_STRING;
-import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT_STRING;
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT_STRING;
+import static christmas.domain.discount.constants.DiscountNumeric.DISCOUNT_MIN_PRICE;
+import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DiscountManagerTest {
@@ -69,7 +69,7 @@ class DiscountManagerTest {
         Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
 
         // then
-        assertThat(discounts).doesNotContainKey(XMAS_DISCOUNT_STRING);
+        assertThat(discounts).doesNotContainKey(XMAS_DISCOUNT.toString());
     }
 
     @ParameterizedTest
@@ -114,7 +114,7 @@ class DiscountManagerTest {
         Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
 
         // then
-        assertThat(discounts).containsKey(SPECIAL_DISCOUNT_STRING);
+        assertThat(discounts).containsKey(SPECIAL_DISCOUNT.toString());
     }
 
     @Test
@@ -129,7 +129,7 @@ class DiscountManagerTest {
         Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
 
         // then
-        assertThat(discounts).containsKey(GIFT_DISCOUNT_STRING);
+        assertThat(discounts).containsKey(GIFT_DISCOUNT.toString());
     }
 
     @Test
@@ -144,7 +144,7 @@ class DiscountManagerTest {
         Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
 
         // then
-        assertThat(discounts).doesNotContainKey(GIFT_DISCOUNT_STRING);
+        assertThat(discounts).doesNotContainKey(GIFT_DISCOUNT.toString());
     }
 
     private static Stream<Arguments> createNoChristmas() {
