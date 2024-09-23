@@ -1,7 +1,6 @@
 package christmas.domain.discount.constants;
 
-public enum DiscountInfo {
-    DEFAULT_GIFT_QUANTITY("1개"),
+public enum DiscountLabel {
     GIFT_DISCOUNT("증정 이벤트"),
     XMAS_DISCOUNT("크리스마스 디데이 할인"),
     WEEKDAY_DISCOUNT("평일 할인"),
@@ -10,7 +9,7 @@ public enum DiscountInfo {
 
     private final String description;
 
-    DiscountInfo(String description) {
+    DiscountLabel(String description) {
         this.description = description;
     }
 

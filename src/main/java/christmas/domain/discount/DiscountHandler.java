@@ -1,11 +1,11 @@
 package christmas.domain.discount;
 
 import static christmas.domain.discount.constants.DiscountNumeric.DISCOUNT_MIN_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT;
-import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT;
-import static christmas.domain.discount.constants.DiscountInfo.WEEKDAY_DISCOUNT;
-import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT;
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.GIFT_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.SPECIAL_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.WEEKDAY_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.WEEKEND_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.XMAS_DISCOUNT;
 
 import christmas.domain.Orders;
 
@@ -18,12 +18,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class DiscountManager {
+public final class DiscountHandler {
     private final Orders orders;
     private final Map<String, Discount> discounts;
     private final Gift gift;
 
-    public DiscountManager(Orders orders, Gift gift) {
+    public DiscountHandler(Orders orders, Gift gift) {
         this.orders = orders;
         this.gift = gift;
         this.discounts = initializeDiscountStrategies();

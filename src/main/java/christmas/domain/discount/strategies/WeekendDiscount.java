@@ -3,7 +3,7 @@ package christmas.domain.discount.strategies;
 import static christmas.constants.Number.EVENT_MONTH;
 import static christmas.constants.Number.EVENT_YEAR;
 import static christmas.domain.discount.constants.DiscountNumeric.WEEKEND_DISCOUNT_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.WEEKEND_DISCOUNT;
 
 import christmas.domain.Orders;
 import christmas.domain.discount.Discount;

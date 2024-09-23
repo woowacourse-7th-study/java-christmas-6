@@ -17,14 +17,14 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static christmas.domain.discount.constants.DiscountNumeric.DISCOUNT_MIN_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.GIFT_DISCOUNT;
-import static christmas.domain.discount.constants.DiscountInfo.SPECIAL_DISCOUNT;
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.GIFT_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.SPECIAL_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.XMAS_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DiscountManagerTest {
+class DiscountHandlerTest {
 
-    private DiscountManager discountManager;
+    private DiscountHandler discountHandler;
     private List<OrderProduct> validOrderProducts;
     private Gift gift;
 
@@ -48,10 +48,10 @@ class DiscountManagerTest {
                 return DISCOUNT_MIN_PRICE - 1; // 최소 금액보다 1원 적음
             }
         };
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).isEmpty();
@@ -63,10 +63,10 @@ class DiscountManagerTest {
     void noChristmasDiscountAfter25(int day) {
         // given
         Orders orders = new Orders(validOrderProducts, new VisitDateDto(day));
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).doesNotContainKey(XMAS_DISCOUNT.toString());
@@ -78,10 +78,10 @@ class DiscountManagerTest {
     void weekendDiscountOnly(int day) {
         // given
         Orders orders = new Orders(validOrderProducts, new VisitDateDto(day));
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).containsKey("주말 할인").doesNotContainKey("평일 할인");
@@ -93,10 +93,10 @@ class DiscountManagerTest {
     void weekdayDiscountOnly(int day) {
         // given
         Orders orders = new Orders(validOrderProducts, new VisitDateDto(day));
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).containsKey("평일 할인").doesNotContainKey("주말 할인");
@@ -108,10 +108,10 @@ class DiscountManagerTest {
     void specialDiscountApplied(int day) {
         // given
         Orders orders = new Orders(validOrderProducts, new VisitDateDto(day));
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).containsKey(SPECIAL_DISCOUNT.toString());
@@ -123,10 +123,10 @@ class DiscountManagerTest {
         // given
         Orders orders = new Orders(validOrderProducts, new VisitDateDto(15));
         gift = new Gift(true); // 증정 이벤트 가능
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).containsKey(GIFT_DISCOUNT.toString());
@@ -138,10 +138,10 @@ class DiscountManagerTest {
         // given
         Orders orders = new Orders(validOrderProducts, new VisitDateDto(15));
         gift = new Gift(false); // 증정 이벤트 비활성화
-        discountManager = new DiscountManager(orders, gift);
+        discountHandler = new DiscountHandler(orders, gift);
 
         // when
-        Map<String, Integer> discounts = discountManager.getAvailableDiscounts();
+        Map<String, Integer> discounts = discountHandler.getAvailableDiscounts();
 
         // then
         assertThat(discounts).doesNotContainKey(GIFT_DISCOUNT.toString());

@@ -3,7 +3,7 @@ package christmas.domain.discount.strategies;
 import static christmas.domain.discount.constants.DiscountNumeric.XMAS_DEFAULT_DISCOUNT_PRICE;
 import static christmas.domain.discount.constants.DiscountNumeric.XMAS_DISCOUNT_END_DAY;
 import static christmas.domain.discount.constants.DiscountNumeric.XMAS_DISCOUNT_PER_DAY_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.XMAS_DISCOUNT;
 
 import christmas.domain.Orders;
 import christmas.domain.discount.Discount;

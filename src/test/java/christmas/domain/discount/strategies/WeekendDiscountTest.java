@@ -1,7 +1,7 @@
 package christmas.domain.discount.strategies;
 
 import static christmas.domain.discount.constants.DiscountNumeric.WEEKEND_DISCOUNT_PRICE;
-import static christmas.domain.discount.constants.DiscountInfo.WEEKEND_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.WEEKEND_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.domain.OrderProduct;

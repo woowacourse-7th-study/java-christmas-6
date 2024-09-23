@@ -2,7 +2,6 @@ package christmas.domain.discount.strategies;
 
 import christmas.domain.OrderProduct;
 import christmas.domain.Orders;
-import christmas.domain.VisitDate;
 import christmas.domain.vo.Product;
 import christmas.dto.VisitDateDto;
 import java.util.List;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static christmas.domain.discount.constants.DiscountInfo.XMAS_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountLabel.XMAS_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class XmasDiscountTest {
