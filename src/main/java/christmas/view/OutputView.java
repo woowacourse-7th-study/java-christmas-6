@@ -4,9 +4,9 @@ import christmas.constants.Badge;
 import christmas.constants.Menu;
 import christmas.constants.ViewMessage;
 import christmas.dto.OrderResponse;
-import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
+import christmas.model.Giveaway;
 
 import static christmas.constants.Event.GIVEAWAY;
 import static christmas.constants.Event.SPECIAL;
@@ -67,9 +67,9 @@ public class OutputView {
         System.out.println(TOTAL_PRICE_BEFORE_DISCOUNT_HEADER);
     }
 
-    public static void printTotalPriceBeforeDiscount(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
-        String priceBeforeDiscount = String.format(TOTAL_PRICE_BEFORE_DISCOUNT, priceBeforeDiscountResponse.priceBeforeDiscount());
-        System.out.println(priceBeforeDiscount);
+    public static void printTotalPriceBeforeDiscount(int priceBeforeDiscount) {
+        String priceBeforeDiscountMessage = String.format(TOTAL_PRICE_BEFORE_DISCOUNT, priceBeforeDiscount);
+        System.out.println(priceBeforeDiscountMessage);
     }
 
     public static void printGiveawayMenuHeader() {
@@ -90,7 +90,7 @@ public class OutputView {
         System.out.println(DISCOUNT_DETAILS_HEADER);
     }
 
-    public static void printDiscountDetails(Discount discount, boolean giveaway) {
+    public static void printDiscountDetails(Discount discount, Giveaway giveaway) {
         int xmasDiscount = discount.calculateXmasDiscount();
         if (xmasDiscount != 0) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, XMAS, xmasDiscount);
@@ -115,7 +115,7 @@ public class OutputView {
             System.out.println(discountDetailsFormat);
         }
 
-        if (giveaway) {
+        if (giveaway.getGiveawayStatus()) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, GIVEAWAY, CHAMPAGNE.getPrice());
             System.out.println(discountDetailsFormat);
         }

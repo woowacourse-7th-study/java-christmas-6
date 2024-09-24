@@ -5,12 +5,13 @@ import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
 import christmas.converter.InputConverter;
 import christmas.dto.OrderResponse;
-import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
+import christmas.model.Giveaway;
 import christmas.model.Order;
 import christmas.model.VisitDay;
 import christmas.service.BadgeService;
+import christmas.service.GiveawayService;
 import christmas.service.OrderService;
 import christmas.service.VisitDayService;
 import christmas.validator.InputValidator;
@@ -20,9 +21,22 @@ import christmas.view.OutputView;
 import java.util.Map;
 
 public class ChristmasEventController {
-    private static final int SPENDING_THRESHOLD = 120_000;
+    public static final int SPENDING_THRESHOLD = 120_000;
 
-    private boolean giveaway = false;
+    private final VisitDayService visitDayService;
+    private final OrderService orderService;
+    private final GiveawayService giveawayService;
+    private final BadgeService badgeService;
+
+    public ChristmasEventController(VisitDayService visitDayService,
+                                    OrderService orderService,
+                                    GiveawayService giveawayService,
+                                    BadgeService badgeService) {
+        this.visitDayService = visitDayService;
+        this.orderService = orderService;
+        this.giveawayService = giveawayService;
+        this.badgeService = badgeService;
+    }
 
     public void run() {
         printGreetingMessage();
@@ -30,12 +44,15 @@ public class ChristmasEventController {
         Order order = readMenu();
         printDay(visitDay);
         printOrderInformation(order);
-        PriceBeforeDiscountResponse priceBeforeDiscountResponse = printPriceBeforeDiscount(order);
-        printGiveawayMenu(priceBeforeDiscountResponse);
-        Discount discount = printDiscountDetails(visitDay, order);
-        int totalDiscount = printTotalDiscount(discount);
+        printPriceBeforeDiscount(order);
+        printGiveawayMenu(order);
+        boolean giveawayStatus = giveawayService.getGiveawayStatus(order);
+        Giveaway giveaway = Giveaway.of(giveawayStatus);
+        Discount discount = Discount.of(visitDay, order, giveaway);
+        printDiscountDetails(discount, giveaway);
+        printTotalDiscount(discount);
         printPayment(order, discount);
-        printBadge(totalDiscount);
+        printBadge(discount);
     }
 
     private void printGreetingMessage() {
@@ -69,68 +86,57 @@ public class ChristmasEventController {
     }
 
     private void printDay(VisitDay visitDay) {
-        VisitDayService visitDayService = VisitDayService.getInstance();
         VisitDayResponse visitDayResponse = visitDayService.createVisitDayResponse(visitDay);
         OutputView.printDay(visitDayResponse);
     }
 
     private void printOrderInformation(Order order) {
         OutputView.printOrderHeader();
-        OrderService orderService = OrderService.getInstance();
         OrderResponse orderResponse = orderService.createOrderResponse(order);
         OutputView.printOrderInformation(orderResponse);
     }
 
-    private PriceBeforeDiscountResponse printPriceBeforeDiscount(Order order) {
+    private void printPriceBeforeDiscount(Order order) {
         OutputView.printTotalPriceBeforeDiscountHeader();
-        OrderService orderService = OrderService.getInstance();
         int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
-        PriceBeforeDiscountResponse priceBeforeDiscountResponse = new PriceBeforeDiscountResponse(priceBeforeDiscount);
-        OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscountResponse);
-        return priceBeforeDiscountResponse;
+        OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscount);
     }
 
-    private void printGiveawayMenu(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
+    private void printGiveawayMenu(Order order) {
         OutputView.printGiveawayMenuHeader();
-        giveaway = isQualifiedForGiveaway(priceBeforeDiscountResponse);
-
-        if (giveaway) {
+        if (giveawayService.getGiveawayStatus(order)) {
             OutputView.printGiveawayMenu(Menu.CHAMPAGNE);
             return;
         }
         OutputView.printGiveawayMenu();
     }
 
-    private boolean isQualifiedForGiveaway(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
-        return priceBeforeDiscountResponse.priceBeforeDiscount() > SPENDING_THRESHOLD;
-    }
-
-    private Discount printDiscountDetails(VisitDay visitDay, Order order) {
+    private void printDiscountDetails(Discount discount, Giveaway giveaway) {
         OutputView.printDiscountDetailsHeader();
-        Discount discount = new Discount(visitDay, order, giveaway);
         OutputView.printDiscountDetails(discount, giveaway);
-        return discount;
     }
 
-    private int printTotalDiscount(Discount discount) {
+    private void printTotalDiscount(Discount discount) {
         OutputView.printTotalDiscountHeader();
         int totalDiscount = discount.calculateTotalDiscount();
         OutputView.printTotalDiscount(totalDiscount);
-        return totalDiscount;
     }
 
     private void printPayment(Order order, Discount discount) {
         OutputView.printPaymentHeader();
-        OrderService orderService = OrderService.getInstance();
-        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
-        int totalDiscount = discount.calculateTotalDiscount();
-        int payment = priceBeforeDiscount - totalDiscount;
+        int payment = calculatePayment(order, discount);
         OutputView.printPayment(payment);
     }
 
-    private void printBadge(int totalDiscount) {
+    private int calculatePayment(Order order, Discount discount) {
+        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
+        int totalDiscount = discount.calculateTotalDiscountForPayment();
+        return priceBeforeDiscount - totalDiscount;
+    }
+
+    private void printBadge(Discount discount) {
         OutputView.printBadgeHeader();
-        BadgeService badgeService = BadgeService.getInstance();
+        int totalDiscount = discount.calculateTotalDiscount();
         Badge badge = badgeService.calculateBadge(totalDiscount);
         OutputView.printBadge(badge);
     }

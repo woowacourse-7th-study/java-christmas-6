@@ -21,12 +21,16 @@ public class Discount {
     private final Order order;
     private final Set<Integer> weekend = Set.of(1, 2, 8, 9, 15, 16, 22, 23, 29, 30);
 
-    public boolean giveaway;
+    public Giveaway giveaway;
 
-    public Discount(VisitDay visitDay, Order order, boolean giveaway) {
+    public Discount(VisitDay visitDay, Order order, Giveaway giveaway) {
         this.visitDay = visitDay;
         this.order = order;
         this.giveaway = giveaway;
+    }
+
+    public static Discount of(VisitDay visitDay, Order order, Giveaway giveaway) {
+        return new Discount(visitDay, order, giveaway);
     }
 
     public int calculateXmasDiscount() {
@@ -93,21 +97,26 @@ public class Discount {
         return specialDiscount;
     }
 
-    private int calculateGiveawayDiscount() {
+    public int calculateGiveawayDiscount() {
         int giveawayDiscount = 0;
-        if (giveaway) {
+        if (giveaway.getGiveawayStatus()) {
             giveawayDiscount = Menu.CHAMPAGNE.getPrice();
         }
         return giveawayDiscount;
     }
 
     public int calculateTotalDiscount() {
+        int totalDiscount = calculateTotalDiscountForPayment();
+        totalDiscount += calculateGiveawayDiscount();
+        return totalDiscount;
+    }
+
+    public int calculateTotalDiscountForPayment() {
         int totalDiscount = 0;
         totalDiscount += calculateXmasDiscount();
         totalDiscount += calculateWeekdaysDiscount();
         totalDiscount += calculateWeekendDiscount();
         totalDiscount += calculateSpecialDiscount();
-        totalDiscount += calculateGiveawayDiscount();
         return totalDiscount;
     }
 }
