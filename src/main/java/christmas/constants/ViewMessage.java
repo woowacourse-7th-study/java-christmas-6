@@ -17,6 +17,7 @@ public class ViewMessage {
     public static final String NONE = "없음";
     public static final String DISCOUNT_DETAILS = "%s: -%,d원";
     public static final String TOTAL_DISCOUNT = "-%,d원";
+    public static final String TOTAL_DISCOUNT_ZERO = "%,d원";
     public static final String PAYMENT = "%,d원";
 
     private ViewMessage() {

@@ -8,17 +8,16 @@ import java.util.Map;
 import static christmas.constants.Symbol.COMMA;
 import static christmas.constants.Symbol.DASH;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
-import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_OTHER_THAN_NUMERIC;
 
-public class InputConverter {
-    private InputConverter() {
+public class OrderConverter {
+    private OrderConverter() {
     }
 
     public static int toInteger(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new UserInputException(NOT_ALLOWED_OTHER_THAN_NUMERIC);
+            throw new UserInputException(NOT_ALLOWED_ORDER);
         }
     }
 

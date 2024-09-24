@@ -3,7 +3,8 @@ package christmas.controller;
 import christmas.constants.Badge;
 import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
-import christmas.converter.InputConverter;
+import christmas.converter.OrderConverter;
+import christmas.converter.VisitDayConverter;
 import christmas.dto.OrderResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
@@ -22,11 +23,14 @@ import java.util.Map;
 
 public class ChristmasEventController {
     public static final int SPENDING_THRESHOLD = 120_000;
+    private static final int EVENT_THRESHOLD = 10_000;
 
     private final VisitDayService visitDayService;
     private final OrderService orderService;
     private final GiveawayService giveawayService;
     private final BadgeService badgeService;
+
+    private boolean isEventUser = true;
 
     public ChristmasEventController(VisitDayService visitDayService,
                                     OrderService orderService,
@@ -64,7 +68,7 @@ public class ChristmasEventController {
             try {
                 String input = InputView.readVisitDay();
                 InputValidator.validateVisitDay(input);
-                int visitDay = InputConverter.toInteger(input);
+                int visitDay = VisitDayConverter.toInteger(input);
                 return new VisitDay(visitDay);
             } catch (UserInputException e) {
                 OutputView.printErrorMessage(e.getMessage());
@@ -77,7 +81,7 @@ public class ChristmasEventController {
             try {
                 String input = InputView.readMenu();
                 InputValidator.validateMenu(input);
-                Map<String, Integer> menu = InputConverter.toMap(input);
+                Map<String, Integer> menu = OrderConverter.toMap(input);
                 return new Order(menu);
             } catch (UserInputException e) {
                 OutputView.printErrorMessage(e.getMessage());
@@ -99,12 +103,15 @@ public class ChristmasEventController {
     private void printPriceBeforeDiscount(Order order) {
         OutputView.printTotalPriceBeforeDiscountHeader();
         int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
+        if (priceBeforeDiscount < EVENT_THRESHOLD) {
+            isEventUser = false;
+        }
         OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscount);
     }
 
     private void printGiveawayMenu(Order order) {
         OutputView.printGiveawayMenuHeader();
-        if (giveawayService.getGiveawayStatus(order)) {
+        if (isEventUser && giveawayService.getGiveawayStatus(order)) {
             OutputView.printGiveawayMenu(Menu.CHAMPAGNE);
             return;
         }
@@ -113,7 +120,7 @@ public class ChristmasEventController {
 
     private void printDiscountDetails(Discount discount, Giveaway giveaway) {
         OutputView.printDiscountDetailsHeader();
-        OutputView.printDiscountDetails(discount, giveaway);
+        OutputView.printDiscountDetails(discount, giveaway, isEventUser);
     }
 
     private void printTotalDiscount(Discount discount) {

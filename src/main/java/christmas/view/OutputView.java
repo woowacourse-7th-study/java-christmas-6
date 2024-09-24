@@ -26,6 +26,7 @@ import static christmas.constants.ViewMessage.PAYMENT_HEADER;
 import static christmas.constants.ViewMessage.PRINT_DAY;
 import static christmas.constants.ViewMessage.TOTAL_DISCOUNT;
 import static christmas.constants.ViewMessage.TOTAL_DISCOUNT_HEADER;
+import static christmas.constants.ViewMessage.TOTAL_DISCOUNT_ZERO;
 import static christmas.constants.ViewMessage.TOTAL_PRICE_BEFORE_DISCOUNT;
 import static christmas.constants.ViewMessage.TOTAL_PRICE_BEFORE_DISCOUNT_HEADER;
 
@@ -90,34 +91,38 @@ public class OutputView {
         System.out.println(DISCOUNT_DETAILS_HEADER);
     }
 
-    public static void printDiscountDetails(Discount discount, Giveaway giveaway) {
+    public static void printDiscountDetails(Discount discount, Giveaway giveaway, boolean isEventUser) {
         int xmasDiscount = discount.calculateXmasDiscount();
-        if (xmasDiscount != 0) {
+        if (isEventUser && xmasDiscount != 0) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, XMAS, xmasDiscount);
             System.out.println(discountDetailsFormat);
         }
 
         int weekdaysDiscount = discount.calculateWeekdaysDiscount();
-        if (weekdaysDiscount != 0) {
+        if (isEventUser && weekdaysDiscount != 0) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, WEEKDAYS, weekdaysDiscount);
             System.out.println(discountDetailsFormat);
         }
 
         int weekendDiscount = discount.calculateWeekendDiscount();
-        if (weekendDiscount != 0) {
+        if (isEventUser && weekendDiscount != 0) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, WEEKEND, weekendDiscount);
             System.out.println(discountDetailsFormat);
         }
 
         int specialDiscount = discount.calculateSpecialDiscount();
-        if (specialDiscount != 0) {
+        if (isEventUser && specialDiscount != 0) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, SPECIAL, specialDiscount);
             System.out.println(discountDetailsFormat);
         }
 
-        if (giveaway.getGiveawayStatus()) {
+        if (isEventUser && giveaway.getGiveawayStatus()) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, GIVEAWAY, CHAMPAGNE.getPrice());
             System.out.println(discountDetailsFormat);
+        }
+
+        if (!isEventUser) {
+            System.out.println(NONE);
         }
     }
 
@@ -127,6 +132,11 @@ public class OutputView {
     }
 
     public static void printTotalDiscount(int totalDiscount) {
+        if (totalDiscount == 0) {
+            String totalDiscountMessage = String.format(TOTAL_DISCOUNT_ZERO, totalDiscount);
+            System.out.println(totalDiscountMessage);
+            return;
+        }
         String totalDiscountMessage = String.format(TOTAL_DISCOUNT, totalDiscount);
         System.out.println(totalDiscountMessage);
     }

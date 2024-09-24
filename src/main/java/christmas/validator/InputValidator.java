@@ -3,9 +3,9 @@ package christmas.validator;
 import christmas.constants.error.type.UserInputException;
 
 import static christmas.constants.Symbol.DASH;
+import static christmas.constants.error.ErrorMessage.INVALID_VISIT_DAY;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_JUST_BLANK;
-import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
-import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_STRIP;
+import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_FIRST_LAST_BLANK;
 
 public class InputValidator {
     private InputValidator() {
@@ -33,13 +33,13 @@ public class InputValidator {
         if (input.equals(stripped)) {
             return;
         }
-        throw new UserInputException(NOT_ALLOWED_STRIP);
+        throw new UserInputException(NOT_ALLOWED_FIRST_LAST_BLANK);
     }
 
     private static void validateDash(String input) {
         if (input.contains(DASH)) {
             return;
         }
-        throw new UserInputException(NOT_ALLOWED_ORDER);
+        throw new UserInputException(INVALID_VISIT_DAY);
     }
 }

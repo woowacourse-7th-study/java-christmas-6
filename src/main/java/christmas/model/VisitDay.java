@@ -2,7 +2,7 @@ package christmas.model;
 
 import christmas.constants.error.type.UserInputException;
 
-import static christmas.constants.error.ErrorMessage.INVALID_VISIT_DAY_RANGE;
+import static christmas.constants.error.ErrorMessage.INVALID_VISIT_DAY;
 
 public class VisitDay {
     private static final int DAY_MIN = 1;
@@ -23,7 +23,7 @@ public class VisitDay {
         if (isInRange(visitDay)) {
             return;
         }
-        throw new UserInputException(INVALID_VISIT_DAY_RANGE);
+        throw new UserInputException(INVALID_VISIT_DAY);
     }
 
     private boolean isInRange(int visitDay) {
