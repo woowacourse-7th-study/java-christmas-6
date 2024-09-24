@@ -6,6 +6,7 @@ import christmas.converter.InputConverter;
 import christmas.dto.OrderResponse;
 import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
+import christmas.model.Discount;
 import christmas.model.Order;
 import christmas.model.VisitDay;
 import christmas.service.OrderService;
@@ -17,7 +18,9 @@ import christmas.view.OutputView;
 import java.util.Map;
 
 public class ChristmasEventController {
-    private static final int SPENDING_THRESHOLD = 120000;
+    private static final int SPENDING_THRESHOLD = 120_000;
+
+    private boolean giveaway = false;
 
     public void run() {
         printGreetingMessage();
@@ -25,8 +28,11 @@ public class ChristmasEventController {
         Order order = readMenu();
         printDay(visitDay);
         printOrderInformation(order);
-        PriceBeforeDiscountResponse priceBeforeDiscountResponse = printTotalPriceBeforeDiscount(order);
+        PriceBeforeDiscountResponse priceBeforeDiscountResponse = printPriceBeforeDiscount(order);
         printGiveawayMenu(priceBeforeDiscountResponse);
+        Discount discount = printDiscountDetails(visitDay, order);
+        printTotalDiscount(discount);
+        printPayment(order, discount);
     }
 
     private void printGreetingMessage() {
@@ -60,29 +66,32 @@ public class ChristmasEventController {
     }
 
     private void printDay(VisitDay visitDay) {
-        VisitDayService visitDayService = new VisitDayService();
+        VisitDayService visitDayService = VisitDayService.getInstance();
         VisitDayResponse visitDayResponse = visitDayService.createVisitDayResponse(visitDay);
         OutputView.printDay(visitDayResponse);
     }
 
     private void printOrderInformation(Order order) {
         OutputView.printOrderHeader();
-        OrderService orderService = new OrderService();
+        OrderService orderService = OrderService.getInstance();
         OrderResponse orderResponse = orderService.createOrderResponse(order);
         OutputView.printOrderInformation(orderResponse);
     }
 
-    private PriceBeforeDiscountResponse printTotalPriceBeforeDiscount(Order order) {
+    private PriceBeforeDiscountResponse printPriceBeforeDiscount(Order order) {
         OutputView.printTotalPriceBeforeDiscountHeader();
-        OrderService orderService = new OrderService();
-        PriceBeforeDiscountResponse priceBeforeDiscountResponse = orderService.calculateTotalPriceBeforeDiscount(order);
+        OrderService orderService = OrderService.getInstance();
+        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
+        PriceBeforeDiscountResponse priceBeforeDiscountResponse = new PriceBeforeDiscountResponse(priceBeforeDiscount);
         OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscountResponse);
         return priceBeforeDiscountResponse;
     }
 
     private void printGiveawayMenu(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
         OutputView.printGiveawayMenuHeader();
-        if (isQualifiedForGiveaway(priceBeforeDiscountResponse)) {
+        giveaway = isQualifiedForGiveaway(priceBeforeDiscountResponse);
+
+        if (giveaway) {
             OutputView.printGiveawayMenu(Menu.CHAMPAGNE);
             return;
         }
@@ -91,5 +100,27 @@ public class ChristmasEventController {
 
     private boolean isQualifiedForGiveaway(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
         return priceBeforeDiscountResponse.priceBeforeDiscount() > SPENDING_THRESHOLD;
+    }
+
+    private Discount printDiscountDetails(VisitDay visitDay, Order order) {
+        OutputView.printDiscountDetailsHeader();
+        Discount discount = new Discount(visitDay, order, giveaway);
+        OutputView.printDiscountDetails(discount, giveaway);
+        return discount;
+    }
+
+    private void printTotalDiscount(Discount discount) {
+        OutputView.printTotalDiscountHeader();
+        int totalDiscount = discount.calculateTotalDiscount();
+        OutputView.printTotalDiscount(totalDiscount);
+    }
+
+    private void printPayment(Order order, Discount discount) {
+        OutputView.printPaymentHeader();
+        OrderService orderService = OrderService.getInstance();
+        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
+        int totalDiscount = discount.calculateTotalDiscount();
+        int payment = priceBeforeDiscount - totalDiscount;
+        OutputView.printPayment(payment);
     }
 }

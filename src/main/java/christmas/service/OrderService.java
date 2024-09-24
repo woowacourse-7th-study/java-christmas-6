@@ -3,7 +3,6 @@ package christmas.service;
 import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
 import christmas.dto.OrderResponse;
-import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.model.Order;
 
 import java.util.ArrayList;
@@ -14,6 +13,18 @@ import java.util.Map;
 import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 
 public class OrderService {
+    private static OrderService instance;
+
+    private OrderService() {
+    }
+
+    public static OrderService getInstance() {
+        if (instance == null) {
+            instance = new OrderService();
+        }
+        return instance;
+    }
+
     public OrderResponse createOrderResponse(Order order) {
         List<String> names = extractNames(order);
         List<Integer> quantities = extractQuantities(order);
@@ -36,7 +47,7 @@ public class OrderService {
         return quantities;
     }
 
-    public PriceBeforeDiscountResponse calculateTotalPriceBeforeDiscount(Order order) {
+    public int calculateTotalPriceBeforeDiscount(Order order) {
         int totalPrice = 0;
         Map<String, Integer> items = order.getItems();
 
@@ -52,6 +63,6 @@ public class OrderService {
             totalPrice += selectedMenu.getPrice() * quantity;
         }
 
-        return new PriceBeforeDiscountResponse(totalPrice);
+        return totalPrice;
     }
 }

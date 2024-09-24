@@ -13,7 +13,7 @@ import static christmas.constants.error.ErrorMessage.NOT_ALLOWED_ORDER;
 public class Order {
     private static final int MIN_QUANTITY = 1;
 
-    Map<String, Integer> items;
+    private final Map<String, Integer> items;
 
     public Order(Map<String, Integer> items) {
         validate(items);
