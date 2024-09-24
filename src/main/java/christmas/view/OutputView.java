@@ -132,12 +132,10 @@ public class OutputView {
     }
 
     public static void printTotalDiscount(int totalDiscount) {
-        if (totalDiscount == 0) {
-            String totalDiscountMessage = String.format(TOTAL_DISCOUNT_ZERO, totalDiscount);
-            System.out.println(totalDiscountMessage);
-            return;
-        }
         String totalDiscountMessage = String.format(TOTAL_DISCOUNT, totalDiscount);
+        if (totalDiscount == 0) {
+            totalDiscountMessage = String.format(TOTAL_DISCOUNT_ZERO, totalDiscount);
+        }
         System.out.println(totalDiscountMessage);
     }
 
