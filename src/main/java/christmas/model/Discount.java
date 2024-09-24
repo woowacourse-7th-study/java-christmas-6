@@ -3,6 +3,7 @@ package christmas.model;
 import christmas.constants.Menu;
 import christmas.constants.MenuType;
 import christmas.constants.error.type.UserInputException;
+import christmas.service.OrderService;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -97,14 +98,6 @@ public class Discount {
         return specialDiscount;
     }
 
-    public int calculateGiveawayDiscount() {
-        int giveawayDiscount = 0;
-        if (giveaway.getGiveawayStatus()) {
-            giveawayDiscount = Menu.CHAMPAGNE.getPrice();
-        }
-        return giveawayDiscount;
-    }
-
     public int calculateTotalDiscount() {
         int totalDiscount = calculateTotalDiscountForPayment();
         totalDiscount += calculateGiveawayDiscount();
@@ -118,5 +111,13 @@ public class Discount {
         totalDiscount += calculateWeekendDiscount();
         totalDiscount += calculateSpecialDiscount();
         return totalDiscount;
+    }
+
+    public int calculateGiveawayDiscount() {
+        int giveawayDiscount = 0;
+        if (giveaway.getGiveawayStatus()) {
+            giveawayDiscount = Menu.CHAMPAGNE.getPrice();
+        }
+        return giveawayDiscount;
     }
 }
