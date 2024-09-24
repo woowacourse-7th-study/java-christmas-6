@@ -1,6 +1,8 @@
 package christmas.view;
 
+import christmas.constants.Badge;
 import christmas.constants.Menu;
+import christmas.constants.ViewMessage;
 import christmas.dto.OrderResponse;
 import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.VisitDayResponse;
@@ -137,5 +139,14 @@ public class OutputView {
     public static void printPayment(int payment) {
         String paymentMessage = String.format(PAYMENT, payment);
         System.out.println(paymentMessage);
+    }
+
+    public static void printBadgeHeader() {
+        printNewLine();
+        System.out.println(ViewMessage.BADGE_HEADER);
+    }
+
+    public static void printBadge(Badge badge) {
+        System.out.println(badge);
     }
 }

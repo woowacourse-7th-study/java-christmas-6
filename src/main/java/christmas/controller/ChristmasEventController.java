@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.constants.Badge;
 import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
 import christmas.converter.InputConverter;
@@ -9,6 +10,7 @@ import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
 import christmas.model.Order;
 import christmas.model.VisitDay;
+import christmas.service.BadgeService;
 import christmas.service.OrderService;
 import christmas.service.VisitDayService;
 import christmas.validator.InputValidator;
@@ -31,8 +33,9 @@ public class ChristmasEventController {
         PriceBeforeDiscountResponse priceBeforeDiscountResponse = printPriceBeforeDiscount(order);
         printGiveawayMenu(priceBeforeDiscountResponse);
         Discount discount = printDiscountDetails(visitDay, order);
-        printTotalDiscount(discount);
+        int totalDiscount = printTotalDiscount(discount);
         printPayment(order, discount);
+        printBadge(totalDiscount);
     }
 
     private void printGreetingMessage() {
@@ -109,10 +112,11 @@ public class ChristmasEventController {
         return discount;
     }
 
-    private void printTotalDiscount(Discount discount) {
+    private int printTotalDiscount(Discount discount) {
         OutputView.printTotalDiscountHeader();
         int totalDiscount = discount.calculateTotalDiscount();
         OutputView.printTotalDiscount(totalDiscount);
+        return totalDiscount;
     }
 
     private void printPayment(Order order, Discount discount) {
@@ -122,5 +126,12 @@ public class ChristmasEventController {
         int totalDiscount = discount.calculateTotalDiscount();
         int payment = priceBeforeDiscount - totalDiscount;
         OutputView.printPayment(payment);
+    }
+
+    private void printBadge(int totalDiscount) {
+        OutputView.printBadgeHeader();
+        BadgeService badgeService = BadgeService.getInstance();
+        Badge badge = badgeService.calculateBadge(totalDiscount);
+        OutputView.printBadge(badge);
     }
 }

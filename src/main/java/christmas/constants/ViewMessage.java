@@ -17,6 +17,7 @@ public class ViewMessage {
     public static final String TOTAL_DISCOUNT = "-%,d원";
     public static final String PAYMENT_HEADER = "<할인 후 예상 결제 금액>";
     public static final String PAYMENT = "%,d원";
+    public static final String BADGE_HEADER = "<12월 이벤트 배지>";
 
     private ViewMessage() {
     }
