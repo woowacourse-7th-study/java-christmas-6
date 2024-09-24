@@ -56,7 +56,7 @@ public class Discount {
                         .findFirst()
                         .orElseThrow(() -> new UserInputException(NOT_ALLOWED_ORDER));
 
-                if (selectedMenu.getType().equals(MenuType.MAIN.getType())) {
+                if (selectedMenu.getType().equals(MenuType.MAIN)) {
                     weekendDiscount += DAY_DISCOUNT * quantity;
                 }
             }
@@ -76,7 +76,7 @@ public class Discount {
                         .findFirst()
                         .orElseThrow(() -> new UserInputException(NOT_ALLOWED_ORDER));
 
-                if (selectedMenu.getType().equals(MenuType.DESSERT.getType())) {
+                if (selectedMenu.getType().equals(MenuType.DESSERT)) {
                     weekdaysDiscount += DAY_DISCOUNT * quantity;
                 }
             }
