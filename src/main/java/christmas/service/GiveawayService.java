@@ -1,5 +1,6 @@
 package christmas.service;
 
+import christmas.model.Giveaway;
 import christmas.model.Order;
 
 import static christmas.controller.ChristmasEventController.GIVEAWAY_THRESHOLD;
@@ -21,5 +22,10 @@ public class GiveawayService {
         OrderService orderService = OrderService.getInstance();
         int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
         return priceBeforeDiscount > GIVEAWAY_THRESHOLD;
+    }
+
+    public Giveaway getGiveaway(Order order) {
+        boolean giveawayStatus = getGiveawayStatus(order);
+        return Giveaway.of(giveawayStatus);
     }
 }

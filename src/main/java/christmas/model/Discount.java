@@ -3,7 +3,6 @@ package christmas.model;
 import christmas.constants.Menu;
 import christmas.constants.MenuType;
 import christmas.constants.error.type.UserInputException;
-import christmas.service.OrderService;
 
 import java.util.Arrays;
 import java.util.Map;

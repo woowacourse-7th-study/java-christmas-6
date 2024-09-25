@@ -33,8 +33,6 @@ public class ChristmasEventController {
     private final GiveawayService giveawayService;
     private final BadgeService badgeService;
 
-    private boolean isEventUser = true;
-
     public ChristmasEventController(OrderService orderService,
                                     GiveawayService giveawayService,
                                     BadgeService badgeService) {
@@ -45,39 +43,34 @@ public class ChristmasEventController {
 
     public void run() {
         printGreetingMessage();
+
         VisitDay visitDay = readVisitDay();
         Order order = readMenu();
-        processEvent(visitDay, order);
-    }
 
-    private void processEvent(VisitDay visitDay, Order order) {
         printInputDataInformation(visitDay, order);
+
         printPriceBeforeDiscount(order);
+
         printGiveawayMenu(order);
-        processDiscount(visitDay, order);
-    }
 
-    private void processDiscount(VisitDay visitDay, Order order) {
-        boolean giveawayStatus = giveawayService.getGiveawayStatus(order);
-        Giveaway giveaway = Giveaway.of(giveawayStatus);
+        Giveaway giveaway = giveawayService.getGiveaway(order);
         Discount discount = Discount.of(visitDay, order, giveaway);
-        printDiscountDetails(discount, giveaway);
+        printDiscountDetails(discount, giveaway, isEventUser(order));
         printTotalDiscount(discount);
-        processPayment(order, discount);
-    }
 
-    private void processPayment(Order order, Discount discount) {
         printPayment(order, discount);
-        processBadge(discount);
-    }
 
-    private void processBadge(Discount discount) {
         printBadge(discount);
     }
 
     private void printInputDataInformation(VisitDay visitDay, Order order) {
         printDay(visitDay);
         printOrderInformation(order);
+    }
+
+    private boolean isEventUser(Order order) {
+        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
+        return priceBeforeDiscount >= EVENT_THRESHOLD;
     }
 
     private void printGreetingMessage() {
@@ -123,23 +116,23 @@ public class ChristmasEventController {
     private void printPriceBeforeDiscount(Order order) {
         OutputView.printTotalPriceBeforeDiscountHeader();
         PriceBeforeDiscountResponse priceBeforeDiscountResponse = orderService.createPriceBeforeDiscountResponse(order);
-        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
-        if (priceBeforeDiscount < EVENT_THRESHOLD) {
-            isEventUser = false;
-        }
         OutputView.printTotalPriceBeforeDiscount(priceBeforeDiscountResponse);
     }
 
     private void printGiveawayMenu(Order order) {
         OutputView.printGiveawayMenuHeader();
-        if (isEventUser && giveawayService.getGiveawayStatus(order)) {
+        if (isGiveawayQualified(order)) {
             OutputView.printGiveawayMenu(Menu.CHAMPAGNE);
             return;
         }
         OutputView.printGiveawayMenu();
     }
 
-    private void printDiscountDetails(Discount discount, Giveaway giveaway) {
+    private boolean isGiveawayQualified(Order order) {
+        return isEventUser(order) && giveawayService.getGiveawayStatus(order);
+    }
+
+    private void printDiscountDetails(Discount discount, Giveaway giveaway, boolean isEventUser) {
         OutputView.printDiscountDetailsHeader();
         OutputView.printDiscountDetails(DiscountDetailsResponse.of(discount, giveaway, isEventUser));
     }
