@@ -13,12 +13,10 @@ public class ViewMessage {
     public static final String BADGE_HEADER = "<12월 이벤트 배지>";
     public static final String ORDER_INFORMATION = "%s %d개";
     public static final String PRINT_DAY = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!";
-    public static final String TOTAL_PRICE_BEFORE_DISCOUNT = "%,d원";
     public static final String NONE = "없음";
     public static final String DISCOUNT_DETAILS = "%s: -%,d원";
     public static final String TOTAL_DISCOUNT = "-%,d원";
-    public static final String TOTAL_DISCOUNT_ZERO = "%,d원";
-    public static final String PAYMENT = "%,d원";
+    public static final String PRICE_FORMAT = "%,d원";
 
     private ViewMessage() {
     }

@@ -1,10 +1,14 @@
 package christmas.view;
 
-import christmas.constants.Badge;
 import christmas.constants.Event;
 import christmas.constants.Menu;
 import christmas.constants.ViewMessage;
+import christmas.dto.BadgeResponse;
+import christmas.dto.DiscountDetailsResponse;
 import christmas.dto.OrderResponse;
+import christmas.dto.PaymentResponse;
+import christmas.dto.PriceBeforeDiscountResponse;
+import christmas.dto.TotalDiscountResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
 import christmas.model.Giveaway;
@@ -22,13 +26,11 @@ import static christmas.constants.ViewMessage.GREETING_MESSAGE;
 import static christmas.constants.ViewMessage.NONE;
 import static christmas.constants.ViewMessage.ORDER_INFORMATION;
 import static christmas.constants.ViewMessage.ORDER_INFORMATION_HEADER;
-import static christmas.constants.ViewMessage.PAYMENT;
 import static christmas.constants.ViewMessage.PAYMENT_HEADER;
+import static christmas.constants.ViewMessage.PRICE_FORMAT;
 import static christmas.constants.ViewMessage.PRINT_DAY;
 import static christmas.constants.ViewMessage.TOTAL_DISCOUNT;
 import static christmas.constants.ViewMessage.TOTAL_DISCOUNT_HEADER;
-import static christmas.constants.ViewMessage.TOTAL_DISCOUNT_ZERO;
-import static christmas.constants.ViewMessage.TOTAL_PRICE_BEFORE_DISCOUNT;
 import static christmas.constants.ViewMessage.TOTAL_PRICE_BEFORE_DISCOUNT_HEADER;
 
 public class OutputView {
@@ -69,8 +71,9 @@ public class OutputView {
         System.out.println(TOTAL_PRICE_BEFORE_DISCOUNT_HEADER);
     }
 
-    public static void printTotalPriceBeforeDiscount(int priceBeforeDiscount) {
-        String priceBeforeDiscountMessage = String.format(TOTAL_PRICE_BEFORE_DISCOUNT, priceBeforeDiscount);
+    public static void printTotalPriceBeforeDiscount(PriceBeforeDiscountResponse priceBeforeDiscountResponse) {
+        int priceBeforeDiscount = priceBeforeDiscountResponse.priceBeforeDiscount();
+        String priceBeforeDiscountMessage = String.format(PRICE_FORMAT, priceBeforeDiscount);
         System.out.println(priceBeforeDiscountMessage);
     }
 
@@ -92,26 +95,37 @@ public class OutputView {
         System.out.println(DISCOUNT_DETAILS_HEADER);
     }
 
-    public static void printDiscountDetails(Discount discount, Giveaway giveaway, boolean isEventUser) {
-        if (!isEventUser) {
-            System.out.println(NONE);
+    public static void printDiscountDetails(DiscountDetailsResponse discountDetailsResponse) {
+        Discount discount = discountDetailsResponse.discount();
+        Giveaway giveaway = discountDetailsResponse.giveaway();
+        boolean isEventUser = discountDetailsResponse.isEventUser();
+
+        if (isEventUser) {
+            printDiscount(discount, giveaway);
             return;
         }
-
-        printDiscountIfApplicable(XMAS, discount.calculateXmasDiscount());
-        printDiscountIfApplicable(WEEKDAYS, discount.calculateWeekdaysDiscount());
-        printDiscountIfApplicable(WEEKEND, discount.calculateWeekendDiscount());
-        printDiscountIfApplicable(SPECIAL, discount.calculateSpecialDiscount());
-
-        if (giveaway.getGiveawayStatus()) {
-            String discountDetailsFormat = String.format(DISCOUNT_DETAILS, GIVEAWAY, CHAMPAGNE.getPrice());
-            System.out.println(discountDetailsFormat);
-        }
+        System.out.println(NONE);
     }
 
-    private static void printDiscountIfApplicable(Event eventType, int discount) {
-        if (discount != 0) {
-            String discountDetailsFormat = String.format(DISCOUNT_DETAILS, eventType, discount);
+    private static void printDiscount(Discount discount, Giveaway giveaway) {
+        printDiscountIfNotZero(XMAS, discount.calculateXmasDiscount());
+        printDiscountIfNotZero(WEEKDAYS, discount.calculateWeekdaysDiscount());
+        printDiscountIfNotZero(WEEKEND, discount.calculateWeekendDiscount());
+        printDiscountIfNotZero(SPECIAL, discount.calculateSpecialDiscount());
+        printGiveawayDiscount(giveaway);
+    }
+
+    private static void printDiscountIfNotZero(Event eventType, int discount) {
+        if (discount == 0) {
+            return;
+        }
+        String discountDetails = String.format(DISCOUNT_DETAILS, eventType, discount);
+        System.out.println(discountDetails);
+    }
+
+    private static void printGiveawayDiscount(Giveaway giveaway) {
+        if (giveaway.getGiveawayStatus()) {
+            String discountDetailsFormat = String.format(DISCOUNT_DETAILS, GIVEAWAY, CHAMPAGNE.getPrice());
             System.out.println(discountDetailsFormat);
         }
     }
@@ -121,10 +135,11 @@ public class OutputView {
         System.out.println(TOTAL_DISCOUNT_HEADER);
     }
 
-    public static void printTotalDiscount(int totalDiscount) {
+    public static void printTotalDiscount(TotalDiscountResponse totalDiscountResponse) {
+        int totalDiscount = totalDiscountResponse.totalDiscount();
         String totalDiscountMessage = String.format(TOTAL_DISCOUNT, totalDiscount);
         if (totalDiscount == 0) {
-            totalDiscountMessage = String.format(TOTAL_DISCOUNT_ZERO, totalDiscount);
+            totalDiscountMessage = String.format(PRICE_FORMAT, totalDiscount);
         }
         System.out.println(totalDiscountMessage);
     }
@@ -134,8 +149,9 @@ public class OutputView {
         System.out.println(PAYMENT_HEADER);
     }
 
-    public static void printPayment(int payment) {
-        String paymentMessage = String.format(PAYMENT, payment);
+    public static void printPayment(PaymentResponse paymentResponse) {
+        int payment = paymentResponse.payment();
+        String paymentMessage = String.format(PRICE_FORMAT, payment);
         System.out.println(paymentMessage);
     }
 
@@ -144,7 +160,8 @@ public class OutputView {
         System.out.println(ViewMessage.BADGE_HEADER);
     }
 
-    public static void printBadge(Badge badge) {
-        System.out.println(badge);
+    public static void printBadge(BadgeResponse badgeResponse) {
+        String badgeName = badgeResponse.badgeName();
+        System.out.println(badgeName);
     }
 }

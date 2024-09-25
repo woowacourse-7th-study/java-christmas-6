@@ -3,6 +3,7 @@ package christmas.service;
 import christmas.constants.Menu;
 import christmas.constants.error.type.UserInputException;
 import christmas.dto.OrderResponse;
+import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.model.Order;
 
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class OrderService {
         List<String> names = extractNames(order);
         List<Integer> quantities = extractQuantities(order);
         return new OrderResponse(names, quantities);
+    }
+
+    public PriceBeforeDiscountResponse createPriceBeforeDiscountResponse(Order order) {
+        int priceBeforeDiscount = calculateTotalPriceBeforeDiscount(order);
+        return new PriceBeforeDiscountResponse(priceBeforeDiscount);
     }
 
     private List<String> extractNames(Order order) {

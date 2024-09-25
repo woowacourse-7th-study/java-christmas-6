@@ -2,7 +2,7 @@ package christmas.service;
 
 import christmas.model.Order;
 
-import static christmas.controller.ChristmasEventController.SPENDING_THRESHOLD;
+import static christmas.controller.ChristmasEventController.GIVEAWAY_THRESHOLD;
 
 public class GiveawayService {
     private static GiveawayService instance;
@@ -20,6 +20,6 @@ public class GiveawayService {
     public boolean getGiveawayStatus(Order order) {
         OrderService orderService = OrderService.getInstance();
         int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
-        return priceBeforeDiscount > SPENDING_THRESHOLD;
+        return priceBeforeDiscount > GIVEAWAY_THRESHOLD;
     }
 }
