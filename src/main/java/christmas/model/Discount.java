@@ -18,18 +18,18 @@ public class Discount {
     private static final int DAY_DISCOUNT = 2023;
 
     private final VisitDay visitDay;
-    private final Order order;
+    public final Order order;
     private final Set<Integer> weekend = Set.of(1, 2, 8, 9, 15, 16, 22, 23, 29, 30);
 
-    public Giveaway giveaway;
+    public boolean giveaway;
 
-    public Discount(VisitDay visitDay, Order order, Giveaway giveaway) {
+    public Discount(VisitDay visitDay, Order order, boolean giveaway) {
         this.visitDay = visitDay;
         this.order = order;
         this.giveaway = giveaway;
     }
 
-    public static Discount of(VisitDay visitDay, Order order, Giveaway giveaway) {
+    public static Discount of(VisitDay visitDay, Order order, boolean giveaway) {
         return new Discount(visitDay, order, giveaway);
     }
 
@@ -114,7 +114,7 @@ public class Discount {
 
     public int calculateGiveawayDiscount() {
         int giveawayDiscount = 0;
-        if (giveaway.getGiveawayStatus()) {
+        if (giveaway) {
             giveawayDiscount = Menu.CHAMPAGNE.getPrice();
         }
         return giveawayDiscount;

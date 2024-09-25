@@ -11,7 +11,6 @@ import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.TotalDiscountResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
-import christmas.model.Giveaway;
 
 import static christmas.constants.Event.GIVEAWAY;
 import static christmas.constants.Event.SPECIAL;
@@ -97,22 +96,21 @@ public class OutputView {
 
     public static void printDiscountDetails(DiscountDetailsResponse discountDetailsResponse) {
         Discount discount = discountDetailsResponse.discount();
-        Giveaway giveaway = discountDetailsResponse.giveaway();
         boolean isEventUser = discountDetailsResponse.isEventUser();
 
         if (isEventUser) {
-            printDiscount(discount, giveaway);
+            printDiscount(discount);
             return;
         }
         System.out.println(NONE);
     }
 
-    private static void printDiscount(Discount discount, Giveaway giveaway) {
+    private static void printDiscount(Discount discount) {
         printDiscountIfNotZero(XMAS, discount.calculateXmasDiscount());
         printDiscountIfNotZero(WEEKDAYS, discount.calculateWeekdaysDiscount());
         printDiscountIfNotZero(WEEKEND, discount.calculateWeekendDiscount());
         printDiscountIfNotZero(SPECIAL, discount.calculateSpecialDiscount());
-        printGiveawayDiscount(giveaway);
+        printGiveawayDiscount(discount.giveaway);
     }
 
     private static void printDiscountIfNotZero(Event eventType, int discount) {
@@ -123,8 +121,8 @@ public class OutputView {
         System.out.println(discountDetails);
     }
 
-    private static void printGiveawayDiscount(Giveaway giveaway) {
-        if (giveaway.getGiveawayStatus()) {
+    private static void printGiveawayDiscount(boolean giveaway) {
+        if (giveaway) {
             String discountDetailsFormat = String.format(DISCOUNT_DETAILS, GIVEAWAY, CHAMPAGNE.getPrice());
             System.out.println(discountDetailsFormat);
         }

@@ -13,7 +13,6 @@ import christmas.dto.PriceBeforeDiscountResponse;
 import christmas.dto.TotalDiscountResponse;
 import christmas.dto.VisitDayResponse;
 import christmas.model.Discount;
-import christmas.model.Giveaway;
 import christmas.model.Order;
 import christmas.model.VisitDay;
 import christmas.service.BadgeService;
@@ -47,30 +46,17 @@ public class ChristmasEventController {
         VisitDay visitDay = readVisitDay();
         Order order = readMenu();
 
-        printInputDataInformation(visitDay, order);
-
-        printPriceBeforeDiscount(order);
-
-        printGiveawayMenu(order);
-
-        Giveaway giveaway = giveawayService.getGiveaway(order);
-        Discount discount = Discount.of(visitDay, order, giveaway);
-        printDiscountDetails(discount, giveaway, isEventUser(order));
-        printTotalDiscount(discount);
-
-        printPayment(order, discount);
-
-        printBadge(discount);
-    }
-
-    private void printInputDataInformation(VisitDay visitDay, Order order) {
         printDay(visitDay);
         printOrderInformation(order);
-    }
+        printPriceBeforeDiscount(order);
+        printGiveawayMenu(order);
 
-    private boolean isEventUser(Order order) {
-        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
-        return priceBeforeDiscount >= EVENT_THRESHOLD;
+        Discount discount = createDiscount(visitDay, order);
+
+        printDiscountDetails(discount);
+        printTotalDiscount(discount);
+        printPayment(discount);
+        printBadge(discount);
     }
 
     private void printGreetingMessage() {
@@ -128,13 +114,10 @@ public class ChristmasEventController {
         OutputView.printGiveawayMenu();
     }
 
-    private boolean isGiveawayQualified(Order order) {
-        return isEventUser(order) && giveawayService.getGiveawayStatus(order);
-    }
-
-    private void printDiscountDetails(Discount discount, Giveaway giveaway, boolean isEventUser) {
+    private void printDiscountDetails(Discount discount) {
         OutputView.printDiscountDetailsHeader();
-        OutputView.printDiscountDetails(DiscountDetailsResponse.of(discount, giveaway, isEventUser));
+        boolean isEventUser = isEventUser(discount.order);
+        OutputView.printDiscountDetails(DiscountDetailsResponse.of(discount, isEventUser));
     }
 
     private void printTotalDiscount(Discount discount) {
@@ -143,16 +126,10 @@ public class ChristmasEventController {
         OutputView.printTotalDiscount(TotalDiscountResponse.of(totalDiscount));
     }
 
-    private void printPayment(Order order, Discount discount) {
+    private void printPayment(Discount discount) {
         OutputView.printPaymentHeader();
-        int payment = calculatePayment(order, discount);
+        int payment = calculatePayment(discount);
         OutputView.printPayment(PaymentResponse.of(payment));
-    }
-
-    private int calculatePayment(Order order, Discount discount) {
-        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
-        int totalDiscount = discount.calculateTotalDiscountForPayment();
-        return priceBeforeDiscount - totalDiscount;
     }
 
     private void printBadge(Discount discount) {
@@ -160,5 +137,25 @@ public class ChristmasEventController {
         int totalDiscount = discount.calculateTotalDiscount();
         Badge badge = badgeService.calculateBadge(totalDiscount);
         OutputView.printBadge(BadgeResponse.of(badge));
+    }
+
+    private Discount createDiscount(VisitDay visitDay, Order order) {
+        boolean giveaway = giveawayService.getGiveawayStatus(order);
+        return Discount.of(visitDay, order, giveaway);
+    }
+
+    private boolean isEventUser(Order order) {
+        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(order);
+        return priceBeforeDiscount >= EVENT_THRESHOLD;
+    }
+
+    private boolean isGiveawayQualified(Order order) {
+        return isEventUser(order) && giveawayService.getGiveawayStatus(order);
+    }
+
+    private int calculatePayment(Discount discount) {
+        int priceBeforeDiscount = orderService.calculateTotalPriceBeforeDiscount(discount.order);
+        int totalDiscount = discount.calculateTotalDiscountForPayment();
+        return priceBeforeDiscount - totalDiscount;
     }
 }
